@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtoV", "AtoV.csproj", "{AB17C946-41F6-4CF7-9C9B-CACF41EA338C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtoV2", "AtoV2\AtoV2.csproj", "{4EEC260D-A08D-442C-BB21-1DC5A02E87D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB17C946-41F6-4CF7-9C9B-CACF41EA338C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB17C946-41F6-4CF7-9C9B-CACF41EA338C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB17C946-41F6-4CF7-9C9B-CACF41EA338C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB17C946-41F6-4CF7-9C9B-CACF41EA338C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EEC260D-A08D-442C-BB21-1DC5A02E87D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EEC260D-A08D-442C-BB21-1DC5A02E87D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EEC260D-A08D-442C-BB21-1DC5A02E87D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EEC260D-A08D-442C-BB21-1DC5A02E87D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
