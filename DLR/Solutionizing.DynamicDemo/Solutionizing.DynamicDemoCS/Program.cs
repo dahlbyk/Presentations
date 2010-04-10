@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Text;
+using System.Xml.Linq;
 
 namespace Solutionizing.DynamicDemoCS
 {
@@ -9,19 +7,13 @@ namespace Solutionizing.DynamicDemoCS
     {
         static void Main(string[] args)
         {
-            dynamic ex = new MyExpandoObject();
 
-            ex.Name = "Keith";
-            ex.BirthDate = new DateTime(2008, 1, 1);
-
-            ex.ToString2 = new Func<string>(() => ex.Name + " " + ex.BirthDate);
-
-
-            Console.WriteLine(ex.ToString2());
 
             Console.ReadKey();
         }
 
+        #region RandomTypeDemo
+        /*
         public static dynamic GetRandom()
         {
             if (DateTime.Now.Second % 2 == 0)
@@ -29,10 +21,6 @@ namespace Solutionizing.DynamicDemoCS
             else
                 return new[] { "hello", "goodbye" };
         }
-        
-
-
-        #region RandomTypeDemo
 
         static void RandomTypeDemo()
         {
@@ -78,16 +66,15 @@ namespace Solutionizing.DynamicDemoCS
                 default: return "YY";
             }
         }
-
+        */
         #endregion
 
         #region ExpandoDemo
-
+        /*
         public static void ExpandoDemo()
         {
             var expandos = new dynamic[] {
-                new ExpandoObject(),
-                new MyExpandoObject()
+                new ExpandoObject()
             };
 
             foreach (var ex in expandos)
@@ -100,7 +87,32 @@ namespace Solutionizing.DynamicDemoCS
                 Console.WriteLine("1 + 1 = {0}", ex.Increment(1));
             }
         }
+        */
+        #endregion
 
+        #region DiscountDemo
+        /*
+        static void DiscountDemo()
+        {
+            var xml = XDocument.Load("discounts.xml");
+            var repo = new DiscountRepository(xml);
+
+            var orders = new[] {
+                new Order { ItemCount = 2, TotalAmount = 15.0m },
+                new Order { ItemCount = 10, TotalAmount = 2.0m }
+            };
+
+            foreach (var order in orders)
+            {
+                Console.WriteLine("Order: {0}", order);
+                foreach (var discount in repo.GetAll())
+                {
+                    Console.WriteLine("Discount {0} valid?\t{1}!", discount.Code, discount.IsValid(order) ? "Yes" : "No");
+                }
+                Console.WriteLine();
+            }
+        }
+        */
         #endregion
     }
 }
