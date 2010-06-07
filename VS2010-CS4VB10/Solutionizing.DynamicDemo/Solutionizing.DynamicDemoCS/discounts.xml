@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Discounts>
+  <Discount>
+    <Code>ALL</Code>
+    <ValidationScript>
+<![CDATA[
+def isValid(order):
+    return True
+]]>
+    </ValidationScript>
+  </Discount>
+  <Discount>
+    <Code>NONE</Code>
+    <ValidationScript>
+<![CDATA[
+def isValid(order):
+    return False
+]]>
+    </ValidationScript>
+  </Discount>
+  <Discount>
+    <Code>BIG</Code>
+    <ValidationScript>
+      <![CDATA[
+def isValid(order):
+    return order.ItemCount > 5
+]]>
+    </ValidationScript>
+  </Discount>
+  <Discount>
+    <Code>CHEAP</Code>
+    <ValidationScript>
+      <![CDATA[
+def isValid(order):
+    return order.TotalAmount < 5
+]]>
+    </ValidationScript>
+  </Discount>
+</Discounts>
