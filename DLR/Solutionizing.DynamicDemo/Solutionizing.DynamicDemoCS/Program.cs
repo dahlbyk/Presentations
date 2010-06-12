@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using System.Xml.Linq;
 
 namespace Solutionizing.DynamicDemoCS
@@ -13,7 +14,7 @@ namespace Solutionizing.DynamicDemoCS
         }
 
         #region RandomTypeDemo
-        /*
+
         public static dynamic GetRandom()
         {
             if (DateTime.Now.Second % 2 == 0)
@@ -66,11 +67,11 @@ namespace Solutionizing.DynamicDemoCS
                 default: return "YY";
             }
         }
-        */
+
         #endregion
 
         #region ExpandoDemo
-        /*
+
         public static void ExpandoDemo()
         {
             var expandos = new dynamic[] {
@@ -87,11 +88,11 @@ namespace Solutionizing.DynamicDemoCS
                 Console.WriteLine("1 + 1 = {0}", ex.Increment(1));
             }
         }
-        */
+
         #endregion
 
         #region DiscountDemo
-        /*
+
         static void DiscountDemo()
         {
             var xml = XDocument.Load("discounts.xml");
@@ -99,6 +100,7 @@ namespace Solutionizing.DynamicDemoCS
 
             var orders = new[] {
                 new Order { ItemCount = 2, TotalAmount = 15.0m },
+                new Order { ItemCount = 7, TotalAmount = 7.0m },
                 new Order { ItemCount = 10, TotalAmount = 2.0m }
             };
 
@@ -112,7 +114,7 @@ namespace Solutionizing.DynamicDemoCS
                 Console.WriteLine();
             }
         }
-        */
+
         #endregion
     }
 }

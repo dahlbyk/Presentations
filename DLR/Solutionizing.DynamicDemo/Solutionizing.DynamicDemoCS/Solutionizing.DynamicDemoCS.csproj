@@ -35,16 +35,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="IronPython">
-      <HintPath>..\..\..\..\..\Program Files\IronPython 2.6 for .NET 4.0 RC\IronPython.dll</HintPath>
+      <HintPath>..\lib\IronPython.dll</HintPath>
     </Reference>
     <Reference Include="IronPython.Modules">
-      <HintPath>..\..\..\..\..\Program Files\IronPython 2.6 for .NET 4.0 RC\IronPython.Modules.dll</HintPath>
+      <HintPath>..\lib\IronPython.Modules.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamic">
-      <HintPath>..\..\..\..\..\Program Files\IronPython 2.6 for .NET 4.0 RC\Microsoft.Dynamic.dll</HintPath>
+      <HintPath>..\lib\Microsoft.Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Scripting">
-      <HintPath>..\..\..\..\..\Program Files\IronPython 2.6 for .NET 4.0 RC\Microsoft.Scripting.dll</HintPath>
+      <HintPath>..\lib\Microsoft.Scripting.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -65,6 +65,7 @@
   <ItemGroup>
     <Content Include="discounts.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
