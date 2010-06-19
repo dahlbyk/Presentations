@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Discount.cs" />
     <Compile Include="DiscountRepository.cs" />
+    <Compile Include="DXElement.cs" />
     <Compile Include="MyExpandoObject.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Program.cs" />

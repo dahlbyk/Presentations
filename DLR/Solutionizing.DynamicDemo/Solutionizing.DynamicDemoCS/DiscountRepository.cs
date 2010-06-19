@@ -16,9 +16,11 @@ namespace Solutionizing.DynamicDemoCS
                 select new Discount(
                     new
                     {
+                        Id = (int)d.Element("Id"),
                         Code = (string)d.Element("Code"),
                         ValidationScript = (string)d.Element("ValidationScript")
                     })
+                //select new Discount(d.AsDynamic())
                 ).ToDictionary(d => d.Code);
         }
 

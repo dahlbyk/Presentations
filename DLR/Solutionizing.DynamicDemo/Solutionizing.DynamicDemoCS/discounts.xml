@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Discounts>
   <Discount>
+    <Id>1</Id>
     <Code>ALL</Code>
     <ValidationScript>
 <![CDATA[
@@ -10,6 +11,7 @@ def isValid(order):
     </ValidationScript>
   </Discount>
   <Discount>
+    <Id>2</Id>
     <Code>NONE</Code>
     <ValidationScript>
 <![CDATA[
@@ -19,6 +21,7 @@ def isValid(order):
     </ValidationScript>
   </Discount>
   <Discount>
+    <Id>3</Id>
     <Code>BIG</Code>
     <ValidationScript>
       <![CDATA[
@@ -28,6 +31,7 @@ def isValid(order):
     </ValidationScript>
   </Discount>
   <Discount>
+    <Id>4</Id>
     <Code>CHEAP</Code>
     <ValidationScript>
       <![CDATA[
