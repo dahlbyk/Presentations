@@ -18,6 +18,7 @@ namespace Solutionizing.DynamicDemoCS
                     {
                         Id = (int)d.Element("Id"),
                         Code = (string)d.Element("Code"),
+                        ExpirationDate = (DateTime?)d.Element("ExpirationDate"),
                         ValidationScript = (string)d.Element("ValidationScript")
                     })
                 //select new Discount(d.AsDynamic())

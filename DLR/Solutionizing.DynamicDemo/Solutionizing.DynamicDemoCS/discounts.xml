@@ -9,6 +9,7 @@ def isValid(order):
     return True
 ]]>
     </ValidationScript>
+    <ExpirationDate>2010-12-31T23:59</ExpirationDate>
   </Discount>
   <Discount>
     <Id>2</Id>

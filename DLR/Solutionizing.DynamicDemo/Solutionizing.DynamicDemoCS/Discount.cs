@@ -1,22 +1,18 @@
 ﻿using System;
 using IronPython.Hosting;
+using Microsoft.Scripting.Hosting;
 
 namespace Solutionizing.DynamicDemoCS
 {
     public class Discount
     {
-        private readonly string script;
-
         public Discount(dynamic discount)
         {
             Id = discount.Id;
             Code = discount.Code;
-            script = discount.ValidationScript;
+            ExpirationDate = discount.ExpirationDate;
 
-            var engine = Python.CreateEngine();
-            var scope = engine.CreateScope();
-            engine.Execute(script, scope);
-            IsValid = scope.GetVariable("isValid");
+            IsValid = GetVariableFromPython((string)discount.ValidationScript, "isValid");
         }
 
         public int Id { get; private set; }
@@ -24,5 +20,20 @@ namespace Solutionizing.DynamicDemoCS
         public string Code { get; private set; }
 
         public Func<Order, bool> IsValid { get; private set; }
+
+        public DateTime? ExpirationDate { get; private set; }
+
+        #region Python
+
+        private static ScriptEngine pythonEngine = Python.CreateEngine();
+
+        private static dynamic GetVariableFromPython(string script, string name)
+        {
+            var scope = pythonEngine.CreateScope();
+            pythonEngine.Execute(script, scope);
+            return scope.GetVariable(name);
+        }
+
+        #endregion
     }
 }

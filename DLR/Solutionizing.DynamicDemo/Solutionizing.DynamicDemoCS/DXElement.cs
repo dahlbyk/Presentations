@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Dynamic;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace Solutionizing.DynamicDemoCS
@@ -31,18 +30,23 @@ namespace Solutionizing.DynamicDemoCS
 
         public override bool TryConvert(ConvertBinder binder, out object result)
         {
-            if (binder.Type == typeof(string))
-                result = (string)element;
-            else if (binder.Type == typeof(int))
-                result = (int)element;
-            else
-            {
-                result = null;
-                return false;
-            }
+            var mapper = typeMap.GetOrDefault(binder.Type);
+            if (mapper == null)
+                return base.TryConvert(binder, out result);
 
+            result = mapper(element);
             return true;
         }
+
+        static Dictionary<Type, Func<XElement, object>> typeMap = new Dictionary<Type,Func<XElement,object>>
+        {
+            { typeof(XElement), e => e },
+            { typeof(string), e => (string)e },
+            { typeof(DateTime), e => (DateTime)e },
+            { typeof(DateTime?), e => (DateTime?)e },
+            { typeof(int), e => (int)e },
+            { typeof(int?), e => (int?)e }
+        };
     }
 
     public static class DXExtensions
@@ -50,6 +54,13 @@ namespace Solutionizing.DynamicDemoCS
         public static dynamic AsDynamic(this XElement @this)
         {
             return new DXElement(@this);
+        }
+
+        public static TValue GetOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> @this, TKey key)
+        {
+            TValue value;
+            @this.TryGetValue(key, out value);
+            return value;
         }
     }
 }
