@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Solutionizing.Dynamic.Xml;
 
 namespace Solutionizing.DynamicDemoCS
 {
@@ -13,15 +14,15 @@ namespace Solutionizing.DynamicDemoCS
         {
             this.discounts = (
                 from d in doc.Element("Discounts").Elements("Discount")
-                select new Discount(
-                    new
-                    {
-                        Id = (int)d.Element("Id"),
-                        Code = (string)d.Element("Code"),
-                        ExpirationDate = (DateTime?)d.Element("ExpirationDate"),
-                        ValidationScript = (string)d.Element("ValidationScript")
-                    })
-                //select new Discount(d.AsDynamic())
+                //select new Discount(
+                //    new
+                //    {
+                //        Id = (int)d.Element("Id"),
+                //        Code = (string)d.Element("Code"),
+                //        ExpirationDate = (DateTime?)d.Element("ExpirationDate"),
+                //        ValidationScript = (string)d.Element("ValidationScript")
+                //    })
+                select new Discount(d.AsDynamic())
                 ).ToDictionary(d => d.Code);
         }
 

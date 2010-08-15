@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Dynamic;
 using System.Xml.Linq;
+using System.Linq.Expressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Solutionizing.DynamicDemoCS
 {
@@ -8,9 +12,21 @@ namespace Solutionizing.DynamicDemoCS
     {
         static void Main(string[] args)
         {
-
+            DiscountDemo();
 
             Console.ReadKey();
+        }
+
+        public static void OptionalTest(string name, int? age = null, bool hasPants = true, bool hasShirt = false)
+        {
+            var m = MethodInfo.GetCurrentMethod();
+
+            var p = m.GetParameters();
+        }
+
+        public static IEnumerable<object> Test()
+        {
+            yield return new { test = "hi" };
         }
 
         #region RandomTypeDemo
@@ -33,7 +49,7 @@ namespace Solutionizing.DynamicDemoCS
                 dynamic z = null;
                 try
                 {
-                    z = x + y + 5;
+                    z = x + y;
                 }
                 catch (Exception ex)
                 {
@@ -74,19 +90,15 @@ namespace Solutionizing.DynamicDemoCS
 
         public static void ExpandoDemo()
         {
-            var expandos = new dynamic[] {
-                new ExpandoObject()
-            };
+            dynamic ex = new ExpandoObject();
 
-            foreach (var ex in expandos)
-            {
-                ex.Name = "Keith";
+            ex.Name = "Keith";
+            ex.Age = "pi";
 
-                Console.WriteLine(ex.Name);
+            Console.WriteLine(new { ex.Name, ex.Age, ex.ShirtColor });
 
-                ex.Increment = new Func<int, int>(i => i + 1);
-                Console.WriteLine("1 + 1 = {0}", ex.Increment(1));
-            }
+            ex.Increment = new Func<int, int>(i => i + 1);
+            Console.WriteLine("1 + 1 = {0}", ex.Increment(1));
         }
 
         #endregion

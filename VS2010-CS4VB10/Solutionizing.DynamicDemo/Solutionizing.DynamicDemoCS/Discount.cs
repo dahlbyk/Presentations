@@ -15,7 +15,7 @@ namespace Solutionizing.DynamicDemoCS
             IsValid = GetVariableFromPython((string)discount.ValidationScript, "isValid");
         }
 
-        public int Id { get; private set; }
+        public string Id { get; private set; }
 
         public string Code { get; private set; }
 

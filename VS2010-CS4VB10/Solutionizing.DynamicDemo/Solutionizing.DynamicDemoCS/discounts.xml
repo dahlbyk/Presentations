@@ -41,4 +41,14 @@ def isValid(order):
 ]]>
     </ValidationScript>
   </Discount>
+  <Discount>
+    <Id>5</Id>
+    <Code>EVEN</Code>
+    <ValidationScript>
+      <![CDATA[
+def isValid(order):
+    return 0 == order.ItemCount % 2
+]]>
+    </ValidationScript>
+  </Discount>
 </Discounts>
