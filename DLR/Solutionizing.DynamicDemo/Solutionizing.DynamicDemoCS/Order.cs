@@ -9,7 +9,7 @@ namespace Solutionizing.DynamicDemoCS
 
         public override string ToString()
         {
-            return string.Format("{0} for {1:C2}", ItemCount, TotalAmount);
+            return string.Format("{0} items for {1:C2}", ItemCount, TotalAmount);
         }
     }
 }

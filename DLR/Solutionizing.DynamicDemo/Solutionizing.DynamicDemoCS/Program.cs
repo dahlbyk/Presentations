@@ -13,6 +13,24 @@ namespace Solutionizing.DynamicDemoCS
             Console.ReadKey();
         }
 
+        #region Simple Discount
+
+        private static string some_python =
+@"
+def isValid(order):
+    return order.ItemCount == 2
+";
+
+        private static object discount_params = new
+        {
+            Id = 1,
+            Code = "TWO",
+            ExpirationDate = new DateTime(2012, 1, 1),
+            ValidationScript = some_python,
+        };
+
+        #endregion
+
         #region RandomTypeDemo
 
         public static dynamic GetRandom()
@@ -98,22 +116,23 @@ namespace Solutionizing.DynamicDemoCS
             var xml = XDocument.Load("discounts.xml");
             var repo = new DiscountRepository(xml);
 
-            var orders = new[] {
-                new Order { ItemCount = 2, TotalAmount = 15.0m },
-                new Order { ItemCount = 7, TotalAmount = 7.0m },
-                new Order { ItemCount = 10, TotalAmount = 2.0m }
-            };
-
-            foreach (var order in orders)
-            {
-                Console.WriteLine("Order: {0}", order);
-                foreach (var discount in repo.GetAll())
-                {
-                    Console.WriteLine("Discount {0} valid?\t{1}!", discount.Code, discount.IsValid(order) ? "Yes" : "No");
-                }
-                Console.WriteLine();
-            }
+            foreach (var discount in repo.GetAll())
+                discount.Dump();
         }
+
+        private static void Dump(this Discount discount)
+        {
+            Console.WriteLine("Discount {0}:", discount);
+            foreach (var order in orders)
+                Console.WriteLine("Valid for order {0}?\t{1}", order, discount.IsValid(order) ? "Yes" : "No");
+            Console.WriteLine();
+        }
+
+        private static Order[] orders = new[] {
+            new Order { ItemCount = 2, TotalAmount = 15.0m },
+            new Order { ItemCount = 7, TotalAmount = 7.0m },
+            new Order { ItemCount = 10, TotalAmount = 2.0m },
+        };
 
         #endregion
     }
