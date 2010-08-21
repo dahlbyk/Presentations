@@ -51,7 +51,7 @@ def isValid(order):
                 dynamic z = null;
                 try
                 {
-                    z = x + y + 5;
+                    z = x + y;
                 }
                 catch (Exception ex)
                 {
@@ -92,19 +92,14 @@ def isValid(order):
 
         public static void ExpandoDemo()
         {
-            var expandos = new dynamic[] {
-                new ExpandoObject()
-            };
+            dynamic ex = new ExpandoObject();
 
-            foreach (var ex in expandos)
-            {
-                ex.Name = "Keith";
+            ex.Name = "Keith";
 
-                Console.WriteLine(ex.Name);
+            Console.WriteLine(ex.Name);
 
-                ex.Increment = new Func<int, int>(i => i + 1);
-                Console.WriteLine("1 + 1 = {0}", ex.Increment(1));
-            }
+            ex.Increment = new Func<int, int>(i => i + 1);
+            Console.WriteLine("1 + 1 = {0}", ex.Increment(1));
         }
 
         #endregion
@@ -122,7 +117,7 @@ def isValid(order):
 
         private static void Dump(this Discount discount)
         {
-            Console.WriteLine("Discount {0}:", discount);
+            Console.WriteLine("Discount {0}:", discount.Code);
             foreach (var order in orders)
                 Console.WriteLine("Valid for order {0}?\t{1}", order, discount.IsValid(order) ? "Yes" : "No");
             Console.WriteLine();
