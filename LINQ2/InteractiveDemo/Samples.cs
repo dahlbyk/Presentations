@@ -43,14 +43,16 @@ namespace Solutionizing.InteractiveDemo
         private void ScanExample()
         {
             Odds().Take(7)
-                .Scan(10, (curr, acc) => curr + acc)
+                .Do(Console.WriteLine)
+                .Scan(10, (curr, acc) => curr * acc)
                 .Run(Console.WriteLine);
         }
 
         private void Scan0Example()
         {
             Odds().Take(7)
-                .Scan0(10, (curr, acc) => curr + acc)
+                .Do(Console.WriteLine)
+                .Scan0(10, (curr, acc) => curr * acc)
                 .Run(Console.WriteLine);
         }
 
@@ -69,6 +71,34 @@ namespace Solutionizing.InteractiveDemo
                 bd => Enumerable.Range(0, 5).Do(Console.WriteLine));
 
             d.Where(x => x % 2 == 0).Run(Console.WriteLine);
+        }
+
+        private void CatchExample()
+        {
+            Console.WriteLine("Without errors...");
+            EnumerableEx.Catch(WithoutError("Catch")).Run(Console.WriteLine);
+            EnumerableEx.OnErrorResumeNext(WithoutError("OERN")).Run(Console.WriteLine);
+
+            Console.WriteLine();
+            Console.WriteLine("With errors...");
+            EnumerableEx.Catch(WithError("Catch")).Run(Console.WriteLine);
+            EnumerableEx.OnErrorResumeNext(WithError("OERN")).Run(Console.WriteLine);
+        }
+
+        private IEnumerable<IEnumerable<string>> WithoutError(string message)
+        {
+            yield return EnumerableEx.Concat(
+                EnumerableEx.Return(message + " 1"),
+                EnumerableEx.Return(message + " 2"));
+            yield return EnumerableEx.Return(message + " 3");
+        }
+
+        private IEnumerable<IEnumerable<string>> WithError(string message)
+        {
+            yield return EnumerableEx.Concat(
+                EnumerableEx.Return(message + " 1"),
+                EnumerableEx.Throw<string>(new Exception(message + " 2")));
+            yield return EnumerableEx.Return(message + " 3");
         }
     }
 }
