@@ -204,7 +204,7 @@ namespace Solutionizing.InteractiveDemo
         private void LeftOuterJoinExample()
         {
             var odds = Odds().Take(10);
-            var threes = new int?[] { 3,6,9,12, 3};
+            var threes = new int?[] { 3, 6, 9, 12, 3 };
 
             var joined = from o in odds
                          join t in threes
