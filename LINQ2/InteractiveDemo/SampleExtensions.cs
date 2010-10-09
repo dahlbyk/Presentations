@@ -6,6 +6,16 @@ namespace Solutionizing.InteractiveDemo
 {
     public static class SampleExtensions
     {
+        public static IEnumerable<T> Log<T>(this IEnumerable<T> @this)
+        {
+            return @this.Do(x => Console.WriteLine(x));
+        }
+
+        public static void Write<T>(this IEnumerable<T> @this)
+        {
+            @this.Run(x => Console.WriteLine(x));
+        }
+
         public static IEnumerable<TResult> Pairwise<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TSource, TResult> resultSelector)
         {
             if (source == null) throw new ArgumentNullException("source");
