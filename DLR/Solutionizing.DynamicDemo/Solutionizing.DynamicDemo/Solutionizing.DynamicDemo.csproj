@@ -60,6 +60,7 @@
       <HintPath>..\packages\Simple.Data.SqlCompact40.0.5.6.0\lib\net40\Simple.Data.SqlCe40.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.CoreEx, Version=1.0.2856.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -84,6 +85,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\Massive.cs" />
+    <Compile Include="Data\MassiveDiscountRepository.cs" />
     <Compile Include="Data\SimpleDataDiscountRepository.cs" />
     <Compile Include="Data\DXmlDiscountRepository.cs" />
     <Compile Include="Data\IDiscountWriter.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="Xml\DXObject.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\LICENSE.txt" />
     <Content Include="DB\DynamicDemo.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

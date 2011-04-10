@@ -126,6 +126,7 @@ def isValid(order):
             return new XmlDiscountRepository(LoadXml());
             //return new DXmlDiscountRepository(LoadXml());
             //return new WebMatrixDataDiscountRepository();
+            //return new MassiveDiscountRepository();
         }
 
         private static void Dump(this Discount discount)
