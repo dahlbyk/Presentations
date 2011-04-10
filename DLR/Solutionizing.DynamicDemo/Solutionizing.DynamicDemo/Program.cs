@@ -125,6 +125,7 @@ def isValid(order):
         {
             return new XmlDiscountRepository(LoadXml());
             //return new DXmlDiscountRepository(LoadXml());
+            //return new WebMatrixDataDiscountRepository();
         }
 
         private static void Dump(this Discount discount)
@@ -141,6 +142,18 @@ def isValid(order):
             new Order { ItemCount = 10, TotalAmount = 2.0m },
         };
 
+
+        public static void WriteDiscount()
+        {
+            var writer = new WebMatrixDataDiscountRepository();
+
+            writer.Save(new
+            {
+                Code = "SEVEN",
+                ValidationScript = "def isValid(order): return order.ItemCount == 7",
+                ExpirationDate = new DateTime(2012, 12, 12),
+            });
+        }
 
         private static XDocument LoadXml()
         {

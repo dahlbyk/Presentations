@@ -61,9 +61,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebMatrix.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\WebMatrix.Data.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DXmlDiscountRepository.cs" />
+    <Compile Include="Data\IDiscountWriter.cs" />
+    <Compile Include="Data\WebMatrixDataDiscountRepository.cs" />
     <Compile Include="Data\XmlDiscountRepositoryBase.cs" />
     <Compile Include="Discount.cs" />
     <Compile Include="Data\XmlDiscountRepository.cs" />
@@ -79,13 +85,18 @@
     <Compile Include="Xml\DXObject.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DB\DynamicDemo.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="discounts.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
