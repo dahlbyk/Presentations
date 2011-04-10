@@ -38,11 +38,23 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.1.1.0\lib\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2">
+      <HintPath>..\packages\Castle.DynamicProxy.2.1.0\lib\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="ClaySharp">
+      <HintPath>..\packages\Clay.1.0\lib\ClaySharp.dll</HintPath>
+    </Reference>
     <Reference Include="IronPython">
       <HintPath>..\lib\IronPython.dll</HintPath>
     </Reference>
     <Reference Include="IronPython.Modules">
       <HintPath>..\lib\IronPython.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamic">
       <HintPath>..\lib\Microsoft.Dynamic.dll</HintPath>
@@ -94,6 +106,7 @@
     <Compile Include="Data\XmlDiscountRepositoryBase.cs" />
     <Compile Include="Discount.cs" />
     <Compile Include="Data\XmlDiscountRepository.cs" />
+    <Compile Include="Samples\Clay\ClaySamples.cs" />
     <Compile Include="Xml\DXContainer.cs" />
     <Compile Include="Xml\DXDocument.cs" />
     <Compile Include="Xml\DXElement.cs" />
