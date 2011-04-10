@@ -1,49 +1,37 @@
 ﻿using System;
 using System.Dynamic;
 using System.Xml.Linq;
+using Solutionizing.DynamicDemo.Data;
+using System.Linq;
 
-namespace Solutionizing.DynamicDemoCS
+namespace Solutionizing.DynamicDemo
 {
     static class Program
     {
-        static void Main(string[] args)
-        {
-
-
-            Console.ReadKey();
-        }
-
-        #region Simple Discount
-
-        private static string some_python =
-@"
-def isValid(order):
-    return order.ItemCount == 2
-";
-
-        private static object discount_params = new
-        {
-            Id = 1,
-            Code = "TWO",
-            ExpirationDate = new DateTime(2012, 1, 1),
-            ValidationScript = some_python,
-        };
-
-        #endregion
-
         #region RandomTypeDemo
 
-        public static dynamic GetRandom()
+        public static void RandomTypeDemo1()
         {
-            if (DateTime.Now.Second % 2 == 0)
-                return "hello";
-            else
-                return new[] { "hello", "goodbye" };
+            foreach (var i in Enumerable.Range(0, 3))
+            {
+                dynamic r = GetRandom(i);
+                Console.WriteLine(r.Length);
+            }
         }
 
-        static void RandomTypeDemo()
+        public static dynamic GetRandom(int n)
         {
-            foreach (var i in System.Linq.Enumerable.Range(0, 16))
+            switch (n % 3)
+            {
+                case 0: return "hello";
+                case 1: return new[] { "hello", "goodbye" };
+                default: return 3;
+            }
+        }
+
+        public static void RandomTypeDemo2()
+        {
+            foreach (var i in Enumerable.Range(0, 16))
             {
                 dynamic x = GetDynamicX(i);
                 dynamic y = GetDynamicY(i);
@@ -59,8 +47,6 @@ def isValid(order):
                 }
 
                 Console.WriteLine("{0}\n    {1} + {2} = {3}", z.GetType(), x, y, z);
-                if ('q' == Console.ReadKey().KeyChar)
-                    break;
             }
         }
 
@@ -106,13 +92,39 @@ def isValid(order):
 
         #region DiscountDemo
 
-        static void DiscountDemo()
+        public static void SingleDiscountDemo()
         {
-            var xml = XDocument.Load("discounts.xml");
-            var repo = new DiscountRepository(xml);
+            var some_python =
+@"
+def isValid(order):
+    return order.ItemCount == 2
+";
+
+            object discount_params = new
+            {
+                Id = 1,
+                Code = "TWO",
+                ExpirationDate = new DateTime(2012, 1, 1),
+                ValidationScript = some_python,
+            };
+
+            var discount = new Discount(discount_params);
+
+            discount.Dump();
+        }
+
+        public static void DiscountDemo()
+        {
+            var repo = GetRepo();
 
             foreach (var discount in repo.GetAll())
                 discount.Dump();
+        }
+
+        private static IDiscountRepository GetRepo()
+        {
+            return new XmlDiscountRepository(LoadXml());
+            //return new DXmlDiscountRepository(LoadXml());
         }
 
         private static void Dump(this Discount discount)
@@ -128,6 +140,12 @@ def isValid(order):
             new Order { ItemCount = 7, TotalAmount = 7.0m },
             new Order { ItemCount = 10, TotalAmount = 2.0m },
         };
+
+
+        private static XDocument LoadXml()
+        {
+            return XDocument.Load("discounts.xml");
+        }
 
         #endregion
     }

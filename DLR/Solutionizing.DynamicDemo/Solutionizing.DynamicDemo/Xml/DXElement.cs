@@ -4,11 +4,11 @@ using System.Dynamic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Solutionizing.DynamicDemoCS
+namespace Solutionizing.DynamicDemo.Xml
 {
     public class DXElement : DynamicObject
     {
-        private readonly XElement element;
+        readonly XElement element;
 
         public DXElement(XElement element)
         {
@@ -38,7 +38,7 @@ namespace Solutionizing.DynamicDemoCS
             return true;
         }
 
-        static Dictionary<Type, Func<XElement, object>> typeMap = new Dictionary<Type,Func<XElement,object>>
+        static readonly Dictionary<Type, Func<XElement, object>> typeMap = new Dictionary<Type,Func<XElement,object>>
         {
             { typeof(XElement), e => e },
             { typeof(string), e => (string)e },
@@ -47,20 +47,5 @@ namespace Solutionizing.DynamicDemoCS
             { typeof(int), e => (int)e },
             { typeof(int?), e => (int?)e }
         };
-    }
-
-    public static class DXExtensions
-    {
-        public static dynamic AsDynamic(this XElement @this)
-        {
-            return new DXElement(@this);
-        }
-
-        public static TValue GetOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> @this, TKey key)
-        {
-            TValue value;
-            @this.TryGetValue(key, out value);
-            return value;
-        }
     }
 }

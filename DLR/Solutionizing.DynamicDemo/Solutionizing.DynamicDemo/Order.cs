@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Solutionizing.DynamicDemoCS
+namespace Solutionizing.DynamicDemo
 {
     public class Order
     {

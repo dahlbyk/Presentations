@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solutionizing.DynamicDemoCS", "Solutionizing.DynamicDemoCS\Solutionizing.DynamicDemoCS.csproj", "{2FCD7EC7-EE5C-4824-84FC-AE6C37F3DF17}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solutionizing.DynamicDemo", "Solutionizing.DynamicDemo\Solutionizing.DynamicDemo.csproj", "{2FCD7EC7-EE5C-4824-84FC-AE6C37F3DF17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

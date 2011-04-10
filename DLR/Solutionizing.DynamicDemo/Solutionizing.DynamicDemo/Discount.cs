@@ -2,7 +2,7 @@
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 
-namespace Solutionizing.DynamicDemoCS
+namespace Solutionizing.DynamicDemo
 {
     public class Discount
     {

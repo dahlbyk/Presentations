@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Dynamic;
 
-namespace Solutionizing.DynamicDemoCS.More
+namespace Solutionizing.DynamicDemo.More
 {
     class MyExpandoObject : DynamicObject
     {
