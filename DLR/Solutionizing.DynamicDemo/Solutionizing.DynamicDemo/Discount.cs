@@ -1,4 +1,6 @@
 ﻿using System;
+using IronJS;
+using IronJS.Hosting;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 
@@ -27,12 +29,31 @@ namespace Solutionizing.DynamicDemo
         {
             switch (scriptType)
             {
+                case "text/javascript":
+                    return GetValidatorFromJavaScript(script);
                 case "text/python":
                     return GetValidatorFromPython(script);
                 default:
                     throw new InvalidOperationException("I do not speak " + scriptType);
             }
         }
+
+        #region JavaScript
+
+        private static Func<Order, bool> GetValidatorFromJavaScript(string script)
+        {
+            var ctx = new CSharp.Context();
+            ctx.Execute(script);
+
+            var function = ctx.GetGlobalAs<FunctionObject>("isValid");
+            var @delegate = function.MetaData.GetDelegate<Func<FunctionObject, CommonObject, Order, BoxedValue>>(function);
+            return o => (bool)@delegate.Invoke(function, ctx.Globals, o).ClrBoxed;
+
+            // Easier in vNext:
+            // return ctx.GetFunctionAs<Func<Order, bool>>("isValid");
+        }
+
+        #endregion
 
         #region Python
 

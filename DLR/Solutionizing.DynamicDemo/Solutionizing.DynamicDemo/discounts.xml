@@ -37,11 +37,12 @@ def isValid(order):
   <Discount>
     <Id>4</Id>
     <Code>CHEAP</Code>
-    <ValidationScriptType>text/python</ValidationScriptType>
+    <ValidationScriptType>text/javascript</ValidationScriptType>
     <ValidationScript>
 <![CDATA[
-def isValid(order):
-    return order.TotalAmount < 5
+function isValid(order) {
+    return order.TotalAmount < 5;
+}
 ]]>
     </ValidationScript>
   </Discount>
