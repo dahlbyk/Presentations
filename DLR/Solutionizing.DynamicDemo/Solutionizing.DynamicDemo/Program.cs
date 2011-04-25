@@ -105,6 +105,7 @@ def isValid(order):
                 Id = 1,
                 Code = "TWO",
                 ExpirationDate = new DateTime(2012, 1, 1),
+                ValidationScriptType = "text/python",
                 ValidationScript = some_python,
             };
 

@@ -21,6 +21,7 @@ namespace Solutionizing.DynamicDemo.Data
                            Id = (int)d.Element("Id"),
                            Code = (string)d.Element("Code"),
                            ExpirationDate = (DateTime?)d.Element("ExpirationDate"),
+                           ValidationScriptType = (string)d.Element("ValidationScriptType"),
                            ValidationScript = (string)d.Element("ValidationScript")
                        });
         }

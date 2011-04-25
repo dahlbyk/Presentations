@@ -12,7 +12,7 @@ namespace Solutionizing.DynamicDemo
             Code = discount.Code;
             ExpirationDate = discount.ExpirationDate;
 
-            IsValid = GetVariableFromPython((string)discount.ValidationScript, "isValid");
+            IsValid = GetValidatorFromScript((string)discount.ValidationScriptType, (string)discount.ValidationScript);
         }
 
         public int Id { get; private set; }
@@ -23,15 +23,26 @@ namespace Solutionizing.DynamicDemo
 
         public DateTime? ExpirationDate { get; private set; }
 
+        private static Func<Order, bool> GetValidatorFromScript(string scriptType, string script)
+        {
+            switch (scriptType)
+            {
+                case "text/python":
+                    return GetValidatorFromPython(script);
+                default:
+                    throw new InvalidOperationException("I do not speak " + scriptType);
+            }
+        }
+
         #region Python
 
-        private static ScriptEngine pythonEngine = Python.CreateEngine();
+        private static readonly ScriptEngine pythonEngine = Python.CreateEngine();
 
-        private static dynamic GetVariableFromPython(string script, string name)
+        private static Func<Order, bool> GetValidatorFromPython(string script)
         {
             var scope = pythonEngine.CreateScope();
             pythonEngine.Execute(script, scope);
-            return scope.GetVariable(name);
+            return scope.GetVariable("isValid");
         }
 
         #endregion

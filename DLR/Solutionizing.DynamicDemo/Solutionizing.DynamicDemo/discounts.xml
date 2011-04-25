@@ -3,6 +3,7 @@
   <Discount>
     <Id>1</Id>
     <Code>ALL</Code>
+    <ValidationScriptType>text/python</ValidationScriptType>
     <ValidationScript>
 <![CDATA[
 def isValid(order):
@@ -14,6 +15,7 @@ def isValid(order):
   <Discount>
     <Id>2</Id>
     <Code>NONE</Code>
+    <ValidationScriptType>text/python</ValidationScriptType>
     <ValidationScript>
 <![CDATA[
 def isValid(order):
@@ -24,8 +26,9 @@ def isValid(order):
   <Discount>
     <Id>3</Id>
     <Code>BIG</Code>
+    <ValidationScriptType>text/python</ValidationScriptType>
     <ValidationScript>
-      <![CDATA[
+<![CDATA[
 def isValid(order):
     return order.ItemCount > 5
 ]]>
@@ -34,8 +37,9 @@ def isValid(order):
   <Discount>
     <Id>4</Id>
     <Code>CHEAP</Code>
+    <ValidationScriptType>text/python</ValidationScriptType>
     <ValidationScript>
-      <![CDATA[
+<![CDATA[
 def isValid(order):
     return order.TotalAmount < 5
 ]]>
