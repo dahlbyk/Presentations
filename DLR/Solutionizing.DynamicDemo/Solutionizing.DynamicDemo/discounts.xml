@@ -26,11 +26,12 @@ def isValid(order):
   <Discount>
     <Id>3</Id>
     <Code>BIG</Code>
-    <ValidationScriptType>text/python</ValidationScriptType>
+    <ValidationScriptType>text/ruby</ValidationScriptType>
     <ValidationScript>
 <![CDATA[
-def isValid(order):
-    return order.ItemCount > 5
+def isValid(order)
+    order.ItemCount > 5
+end
 ]]>
     </ValidationScript>
   </Discount>

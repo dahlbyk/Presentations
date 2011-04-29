@@ -57,6 +57,12 @@
     <Reference Include="IronPython.Modules">
       <HintPath>..\lib\IronPython.Modules.dll</HintPath>
     </Reference>
+    <Reference Include="IronRuby">
+      <HintPath>..\lib\IronRuby\bin\IronRuby.dll</HintPath>
+    </Reference>
+    <Reference Include="IronRuby.Libraries">
+      <HintPath>..\lib\IronRuby\bin\IronRuby.Libraries.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>

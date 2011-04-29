@@ -2,6 +2,7 @@
 using IronJS;
 using IronJS.Hosting;
 using IronPython.Hosting;
+using IronRuby;
 using Microsoft.Scripting.Hosting;
 
 namespace Solutionizing.DynamicDemo
@@ -33,6 +34,8 @@ namespace Solutionizing.DynamicDemo
                     return GetValidatorFromJavaScript(script);
                 case "text/python":
                     return GetValidatorFromPython(script);
+                case "text/ruby":
+                    return GetValidatorFromRuby(script);
                 default:
                     throw new InvalidOperationException("I do not speak " + scriptType);
             }
@@ -63,6 +66,19 @@ namespace Solutionizing.DynamicDemo
         {
             var scope = pythonEngine.CreateScope();
             pythonEngine.Execute(script, scope);
+            return scope.GetVariable("isValid");
+        }
+
+        #endregion
+
+        #region Ruby
+
+        private static readonly ScriptEngine rubyEngine = Ruby.CreateEngine();
+
+        private static Func<Order, bool> GetValidatorFromRuby(string script)
+        {
+            var scope = rubyEngine.CreateScope();
+            rubyEngine.Execute(script, scope);
             return scope.GetVariable("isValid");
         }
 
