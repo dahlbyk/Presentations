@@ -50,10 +50,6 @@
     <Reference Include="ImpromptuInterface">
       <HintPath>..\packages\ImpromptuInterface.5.6.2\lib\net40\ImpromptuInterface.dll</HintPath>
     </Reference>
-    <Reference Include="IronJS, Version=0.2.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\ironjs-0.2-clr4-x86\IronJS.dll</HintPath>
-    </Reference>
     <Reference Include="IronPython">
       <HintPath>..\lib\IronPython.dll</HintPath>
     </Reference>
