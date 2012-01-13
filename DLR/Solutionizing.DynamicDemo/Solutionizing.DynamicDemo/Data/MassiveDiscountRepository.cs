@@ -40,6 +40,7 @@ namespace Solutionizing.DynamicDemo.Data
             table.Insert(new {
                 Code = (string)discount.Code,
                 ValidationScript = (string)discount.ValidationScript,
+                ValidationScriptType = (string)discount.ValidationScriptType,
                 ExpirationDate = (DateTime?)discount.ExpirationDate,
             });
         }

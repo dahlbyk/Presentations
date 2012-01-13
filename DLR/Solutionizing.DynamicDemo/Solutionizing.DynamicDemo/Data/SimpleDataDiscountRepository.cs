@@ -7,7 +7,7 @@ namespace Solutionizing.DynamicDemo.Data
 {
     public class SimpleDataDiscountRepository : IDiscountRepository, IDiscountWriter
     {
-        readonly dynamic database = Database.Open();
+        readonly dynamic database = Database.OpenNamedConnection("DynamicDemo");
 
         public Discount GetByCode(string code)
         {
@@ -28,6 +28,7 @@ namespace Solutionizing.DynamicDemo.Data
             database.Discounts.Insert(
                 Code: (string)discount.Code,
                 ValidationScript: (string)discount.ValidationScript,
+                ValidationScriptType: (string)discount.ValidationScriptType,
                 ExpirationDate: (DateTime)discount.ExpirationDate
             );
         }
