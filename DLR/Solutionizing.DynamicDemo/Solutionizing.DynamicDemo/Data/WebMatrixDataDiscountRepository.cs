@@ -29,8 +29,13 @@ namespace Solutionizing.DynamicDemo.Data
 
         public void Save(dynamic discount)
         {
-            database.Execute("INSERT INTO Discounts (Code, ValidationScript, ExpirationDate) VALUES (@0, @1, @2)",
-                (string)discount.Code, (string)discount.ValidationScript, (DateTime)discount.ExpirationDate);
+            database.Execute("INSERT INTO Discounts (Code, ValidationScript, ValidationScriptType, ExpirationDate) VALUES (@0, @1, @2, @3)",
+                (string)discount.Code, (string)discount.ValidationScript, (string)discount.ValidationScriptType, (DateTime)discount.ExpirationDate);
+        }
+
+        public void Delete(string code)
+        {
+            database.Execute("DELETE FROM Discounts WHERE Code = @0", code);
         }
     }
 }

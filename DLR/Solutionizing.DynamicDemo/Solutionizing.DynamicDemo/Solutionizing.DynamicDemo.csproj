@@ -106,6 +106,8 @@
     <Compile Include="Data\XmlDiscountRepositoryBase.cs" />
     <Compile Include="Discount.cs" />
     <Compile Include="Data\XmlDiscountRepository.cs" />
+    <Compile Include="DiscountExtensions.cs" />
+    <Compile Include="IDiscountDefinition.cs" />
     <Compile Include="Xml\DXContainer.cs" />
     <Compile Include="Xml\DXDocument.cs" />
     <Compile Include="Xml\DXElement.cs" />

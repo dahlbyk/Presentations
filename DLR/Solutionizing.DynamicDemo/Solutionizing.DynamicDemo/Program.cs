@@ -1,82 +1,86 @@
 ﻿using System;
 using System.Dynamic;
 using System.Xml.Linq;
+using ImpromptuInterface;
+using ImpromptuInterface.Dynamic;
 using Solutionizing.DynamicDemo.Data;
-using System.Linq;
 
 namespace Solutionizing.DynamicDemo
 {
     static class Program
     {
-        #region RandomTypeDemo
+        #region Sandbox
 
-        public static void RandomTypeDemo1()
+        public static void Sandbox()
         {
-            foreach (var i in Enumerable.Range(0, 3))
+
+        }
+
+        #endregion
+
+        #region Lengths
+
+        static readonly dynamic[] stuffWithLengths = new dynamic[]
+        {
+            "hello",
+            new[] { "hello", "goodbye" },
+            new { Length = "long" },
+            3,
+        };
+
+        public static void GetLengths()
+        {
+            foreach (dynamic r in stuffWithLengths)
             {
-                dynamic r = GetRandom(i);
                 Console.WriteLine(r.Length);
-            }
-        }
-
-        public static dynamic GetRandom(int n)
-        {
-            switch (n % 3)
-            {
-                case 0: return "hello";
-                case 1: return new[] { "hello", "goodbye" };
-                default: return 3;
-            }
-        }
-
-        public static void RandomTypeDemo2()
-        {
-            foreach (var i in Enumerable.Range(0, 16))
-            {
-                dynamic x = GetDynamicX(i);
-                dynamic y = GetDynamicY(i);
-
-                dynamic z = null;
-                try
-                {
-                    z = x + y;
-                }
-                catch (Exception ex)
-                {
-                    z = ex.Message;
-                }
-
-                Console.WriteLine("{0}\n    {1} + {2} = {3}", z.GetType(), x, y, z);
-            }
-        }
-
-        static dynamic GetDynamicX(int i)
-        {
-            switch (i % 4)
-            {
-                case 0: return 1;
-                case 2: return "XX";
-                case 1: return 1.5;
-                default: return DateTime.Now;
-            }
-        }
-
-        static dynamic GetDynamicY(int i)
-        {
-            switch (i / 4)
-            {
-                case 0: return 2;
-                case 1: return 3.14m;
-                case 2: return new TimeSpan(12, 0, 0);
-                default: return "YY";
             }
         }
 
         #endregion
 
-        #region ExpandoDemo
+        #region Operators
 
-        public static void ExpandoDemo()
+        static readonly dynamic[] xValues = new dynamic[]
+        {
+            1,
+            "XX",
+            1.5,
+            DateTime.Now,
+        };
+
+        static readonly dynamic[] yValues = new dynamic[]
+        {
+            2,
+            3.14m,
+            new TimeSpan(12, 0, 0),
+            "YY",
+        };
+
+        static void TryAdd(dynamic y, dynamic x)
+        {
+            try
+            {
+                dynamic z = x + y;
+                Console.WriteLine("{0} + {1} = {2} ({3})", x, y, z, z.GetType());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} + {1} = ERROR:\n{2}", x, y, ex.Message);
+            }
+        }
+
+        public static void Add()
+        {
+            foreach (var x in xValues)
+                foreach (var y in yValues)
+                    TryAdd(y, x);
+        }
+
+        #endregion
+
+        #region Building Dynamic Objects
+
+        public static void Expando()
         {
             dynamic ex = new ExpandoObject();
 
@@ -88,9 +92,60 @@ namespace Solutionizing.DynamicDemo
             Console.WriteLine("1 + 1 = {0}", ex.Increment(1));
         }
 
+        public static void ImpromptuBuilder()
+        {
+            dynamic New = Builder.New();
+
+            dynamic person = New.Person(
+                FirstName: "Robert",
+                LastName: "Paulson"
+            )
+            .Age(42)
+            .Sing(ReturnVoid.Arguments(() => Console.WriteLine("TROOOOOOOOGDOOOOOOOOOOOR!")))
+            .Greet(Return<string>.ThisAndArguments(
+                (@this, greeting) => string.Format("{0} {1} {2}", greeting, @this.FirstName, @this.LastName)));
+
+            Console.WriteLine(person.FirstName);
+            Console.WriteLine(person.LastName);
+            Console.WriteLine(person.Age);
+            Console.WriteLine(person.Greet("His name is"));
+            person.Sing();
+
+            // http://code.google.com/p/impromptu-interface/wiki/UsageBuilder
+        }
+
         #endregion
 
-        #region DiscountDemo
+        #region Currying
+
+        static readonly Func<int, double, float, double> adder = (x, y, z) => x + y + z;
+
+        public static void StaticCurrying()
+        {
+            Func<int, Func<double, Func<float, double>>> curried = x => y => z => adder(x, y, z);
+
+            var sum = curried(2)(3.14)(42.0f);
+            Console.WriteLine(sum);
+        }
+
+        public static void DynamicCurrying()
+        {
+            var curried = Impromptu.Curry(adder);
+
+            Console.WriteLine(curried(1, 2, 3)); // bug!
+            Console.WriteLine(curried(1, 2)(3));
+            Console.WriteLine(curried(1)(2, 3));
+            Console.WriteLine(curried(1)(2)(3));
+
+            var partiallyApplied = curried(2, 3.14);
+
+            Console.WriteLine(partiallyApplied(42.0f));
+            Console.WriteLine(partiallyApplied(10));
+        }
+
+        #endregion
+
+        #region Discounts
 
         public static void SingleDiscountDemo()
         {
@@ -114,36 +169,37 @@ def isValid(order):
             discount.Dump();
         }
 
-        public static void DiscountDemo()
+        public static void XmlDiscounts()
         {
-            var repo = GetRepo();
+            var repo = new XmlDiscountRepository(xml);
 
-            foreach (var discount in repo.GetAll())
-                discount.Dump();
+            repo.DumpAll();
         }
 
-        private static IDiscountRepository GetRepo()
+        public static void DXmlDiscounts()
         {
-            return new XmlDiscountRepository(LoadXml());
-            //return new DXmlDiscountRepository(LoadXml());
-            //return new WebMatrixDataDiscountRepository();
-            //return new MassiveDiscountRepository();
+            var repo = new DXmlDiscountRepository(xml);
+
+            repo.DumpAll();
         }
 
-        private static void Dump(this Discount discount)
+        public static void WebMatrixDataDiscounts()
         {
-            Console.WriteLine("Discount {0}:", discount.Code);
-            foreach (var order in orders)
-                Console.WriteLine("Valid for order {0}?\t{1}", order, discount.IsValid(order) ? "Yes" : "No");
-            Console.WriteLine();
+            var repo = new WebMatrixDataDiscountRepository();
+
+            repo.DumpAll();
         }
 
-        private static Order[] orders = new[] {
-            new Order { ItemCount = 2, TotalAmount = 15.0m },
-            new Order { ItemCount = 7, TotalAmount = 7.0m },
-            new Order { ItemCount = 10, TotalAmount = 2.0m },
-        };
+        public static void MassiveDiscounts()
+        {
+            var repo = new MassiveDiscountRepository();
 
+            repo.DumpAll();
+        }
+
+        #endregion
+
+        #region Write
 
         public static void WriteDiscount()
         {
@@ -153,15 +209,13 @@ def isValid(order):
             {
                 Code = "SEVEN",
                 ValidationScript = "def isValid(order): return order.ItemCount == 7",
+                ValidationScriptType = "text/python",
                 ExpirationDate = new DateTime(2012, 12, 12),
             });
         }
 
-        private static XDocument LoadXml()
-        {
-            return XDocument.Load("discounts.xml");
-        }
-
         #endregion
+
+        private static readonly XDocument xml = XDocument.Load("discounts.xml");
     }
 }
