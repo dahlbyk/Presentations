@@ -35,16 +35,4 @@ end
 ]]>
     </ValidationScript>
   </Discount>
-  <Discount>
-    <Id>4</Id>
-    <Code>CHEAP</Code>
-    <ValidationScriptType>text/javascript</ValidationScriptType>
-    <ValidationScript>
-<![CDATA[
-function isValid(order) {
-    return order.TotalAmount < 5;
-}
-]]>
-    </ValidationScript>
-  </Discount>
 </Discounts>

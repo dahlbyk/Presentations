@@ -56,7 +56,7 @@ namespace Solutionizing.DynamicDemo
             "YY",
         };
 
-        static void TryAdd(dynamic y, dynamic x)
+        static void TryAdd(dynamic x, dynamic y)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace Solutionizing.DynamicDemo
         {
             foreach (var x in xValues)
                 foreach (var y in yValues)
-                    TryAdd(y, x);
+                    TryAdd(x, y);
         }
 
         #endregion
@@ -122,10 +122,15 @@ namespace Solutionizing.DynamicDemo
 
         public static void StaticCurrying()
         {
-            Func<int, Func<double, Func<float, double>>> curried = x => y => z => adder(x, y, z);
+            Func<int, Func<double, Func<float, double>>> curried =
+                x => y => z => adder(x, y, z);
 
-            var sum = curried(2)(3.14)(42.0f);
-            Console.WriteLine(sum);
+            Console.WriteLine(curried(2)(3.14)(42.0f));
+
+            Func<int, double, Func<float, double>> curried2 =
+                (x, y) => z => adder(x, y, z);
+
+            Console.WriteLine(curried2(2, 3.14)(42.0f));
         }
 
         public static void DynamicCurrying()
