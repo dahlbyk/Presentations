@@ -116,6 +116,39 @@ namespace Solutionizing.DynamicDemo
 
         #endregion
 
+        #region Currying Too
+
+        static readonly Action<string, int, string> logger = (file, lineNumber, error) =>
+            Console.WriteLine("Error in {0}, line {1}: {2}", file, lineNumber, error);
+
+        static string PostUrl(string author, DateTime date, string slug)
+        {
+            return string.Format(
+                "http://lostechies.com/{0}/{1:yyyy}/{1:MM}/{1:dd}/{2}",
+                author, date, slug);
+        }
+
+        static void Static()
+        {
+            Func<string, Func<int, Action<string>>> curried =
+                f => l => e => logger(f, l, e);
+
+            var errorInProgram = curried("Program.cs");
+            errorInProgram(12)("Invalid syntax");
+            errorInProgram(16)("Missing return statement");
+        }
+
+        static void Dynamic()
+        {
+            var curried = Impromptu.Curry(logger);
+
+            var errorInProgram = curried("Program.cs");
+            errorInProgram(12)("Invalid syntax");
+            errorInProgram(16, "Missing return statement");
+        }
+
+        #endregion
+
         #region Currying
 
         static readonly Func<int, double, float, double> adder = (x, y, z) => x + y + z;
