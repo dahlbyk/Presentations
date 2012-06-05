@@ -235,6 +235,13 @@ def isValid(order):
             repo.DumpAll();
         }
 
+        public static void DapperDiscounts()
+        {
+            var repo = new DapperDiscountRepository();
+
+            repo.DumpAll();
+        }
+
         #endregion
 
         #region Write

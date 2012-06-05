@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\Massive.cs" />
+    <Compile Include="Data\DapperDiscountRepository.cs" />
     <Compile Include="Data\MassiveDiscountRepository.cs" />
     <Compile Include="Data\SimpleDataDiscountRepository.cs" />
     <Compile Include="Data\DXmlDiscountRepository.cs" />
