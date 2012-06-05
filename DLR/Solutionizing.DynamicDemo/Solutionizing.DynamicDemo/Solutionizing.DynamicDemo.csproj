@@ -38,6 +38,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.8\lib\net40\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="ImpromptuInterface">
       <HintPath>..\packages\ImpromptuInterface.5.6.2\lib\net40\ImpromptuInterface.dll</HintPath>
     </Reference>
