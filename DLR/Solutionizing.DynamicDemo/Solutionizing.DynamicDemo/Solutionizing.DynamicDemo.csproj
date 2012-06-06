@@ -65,18 +65,6 @@
     <Reference Include="Microsoft.Scripting">
       <HintPath>..\lib\Microsoft.Scripting.dll</HintPath>
     </Reference>
-    <Reference Include="Simple.Data, Version=0.12.2.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Simple.Data.Core.0.12.2.2\lib\net40\Simple.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Simple.Data.Ado, Version=0.12.2.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Simple.Data.Ado.0.12.2.2\lib\net40\Simple.Data.Ado.dll</HintPath>
-    </Reference>
-    <Reference Include="Simple.Data.SqlCe40, Version=0.12.2.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Simple.Data.SqlCompact40.0.12.2.2\lib\net40\Simple.Data.SqlCe40.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -98,7 +86,6 @@
     <Compile Include="App_Code\Massive.cs" />
     <Compile Include="Data\DapperDiscountRepository.cs" />
     <Compile Include="Data\MassiveDiscountRepository.cs" />
-    <Compile Include="Data\SimpleDataDiscountRepository.cs" />
     <Compile Include="Data\DXmlDiscountRepository.cs" />
     <Compile Include="Data\IDiscountWriter.cs" />
     <Compile Include="Data\WebMatrixDataDiscountRepository.cs" />
