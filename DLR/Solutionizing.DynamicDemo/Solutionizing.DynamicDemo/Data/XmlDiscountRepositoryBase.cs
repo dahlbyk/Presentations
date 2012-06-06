@@ -8,12 +8,12 @@ namespace Solutionizing.DynamicDemo.Data
     {
         protected readonly Dictionary<string, Discount> discounts;
 
-        public XmlDiscountRepositoryBase(XDocument doc)
+        protected XmlDiscountRepositoryBase(XDocument doc)
         {
-            discounts = GetDiscountsByCode(doc).ToDictionary(d => d.Code);
+            discounts = GetDiscounts(doc).ToDictionary(d => d.Code);
         }
 
-        protected abstract IEnumerable<Discount> GetDiscountsByCode(XDocument doc);
+        protected abstract IEnumerable<Discount> GetDiscounts(XDocument doc);
 
         public Discount GetByCode(string code)
         {

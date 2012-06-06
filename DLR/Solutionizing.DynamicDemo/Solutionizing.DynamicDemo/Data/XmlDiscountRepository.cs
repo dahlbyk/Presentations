@@ -12,9 +12,9 @@ namespace Solutionizing.DynamicDemo.Data
         {
         }
 
-        protected override IEnumerable<Discount> GetDiscountsByCode(XDocument doc)
+        protected override IEnumerable<Discount> GetDiscounts(XDocument doc)
         {
-            return from d in doc.Element("Discounts").Elements("Discount")
+            return from d in doc.Root.Elements("Discount")
                    select new Discount(
                        new
                        {
