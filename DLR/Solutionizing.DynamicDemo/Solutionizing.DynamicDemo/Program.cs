@@ -97,13 +97,13 @@ namespace Solutionizing.DynamicDemo
             dynamic New = Builder.New();
 
             dynamic person = New.Person(
-                FirstName: "Robert",
-                LastName: "Paulson"
-            )
-            .Age(42)
-            .Sing(ReturnVoid.Arguments(() => Console.WriteLine("TROOOOOOOOGDOOOOOOOOOOOR!")))
-            .Greet(Return<string>.ThisAndArguments(
-                (@this, greeting) => string.Format("{0} {1} {2}", greeting, @this.FirstName, @this.LastName)));
+                    FirstName: "Robert",
+                    LastName: "Paulson"
+                )
+                .Age(42)
+                .Sing(ReturnVoid.Arguments(() => Console.WriteLine("TROOOOOOOOGDOOOOOOOOOOOR!")))
+                .Greet(Return<string>.ThisAndArguments(
+                    (@this, greeting) => string.Format("{0} {1} {2}", greeting, @this.FirstName, @this.LastName)));
 
             Console.WriteLine(person.FirstName);
             Console.WriteLine(person.LastName);
@@ -116,17 +116,10 @@ namespace Solutionizing.DynamicDemo
 
         #endregion
 
-        #region Currying Too
+        #region Currying
 
         static readonly Action<string, int, string> logger = (file, lineNumber, error) =>
             Console.WriteLine("Error in {0}, line {1}: {2}", file, lineNumber, error);
-
-        static string PostUrl(string author, DateTime date, string slug)
-        {
-            return string.Format(
-                "http://lostechies.com/{0}/{1:yyyy}/{1:MM}/{1:dd}/{2}",
-                author, date, slug);
-        }
 
         static void Static()
         {
@@ -145,40 +138,6 @@ namespace Solutionizing.DynamicDemo
             var errorInProgram = curried("Program.cs");
             errorInProgram(12)("Invalid syntax");
             errorInProgram(16, "Missing return statement");
-        }
-
-        #endregion
-
-        #region Currying
-
-        static readonly Func<int, double, float, double> adder = (x, y, z) => x + y + z;
-
-        public static void StaticCurrying()
-        {
-            Func<int, Func<double, Func<float, double>>> curried =
-                x => y => z => adder(x, y, z);
-
-            Console.WriteLine(curried(2)(3.14)(42.0f));
-
-            Func<int, double, Func<float, double>> curried2 =
-                (x, y) => z => adder(x, y, z);
-
-            Console.WriteLine(curried2(2, 3.14)(42.0f));
-        }
-
-        public static void DynamicCurrying()
-        {
-            var curried = Impromptu.Curry(adder);
-
-            Console.WriteLine(curried(1, 2, 3)); // bug!
-            Console.WriteLine(curried(1, 2)(3));
-            Console.WriteLine(curried(1)(2, 3));
-            Console.WriteLine(curried(1)(2)(3));
-
-            var partiallyApplied = curried(2, 3.14);
-
-            Console.WriteLine(partiallyApplied(42.0f));
-            Console.WriteLine(partiallyApplied(10));
         }
 
         #endregion
