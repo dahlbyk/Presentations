@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebMatrix.Data;
@@ -27,10 +26,11 @@ namespace Solutionizing.DynamicDemo.Data
             return result.Select(row => new Discount(row));
         }
 
-        public void Save(dynamic discount)
+        public void Save(IDiscountDefinition discount)
         {
-            database.Execute("INSERT INTO Discounts (Code, ValidationScript, ValidationScriptType, ExpirationDate) VALUES (@0, @1, @2, @3)",
-                (string)discount.Code, (string)discount.ValidationScript, (string)discount.ValidationScriptType, (DateTime)discount.ExpirationDate);
+            database.Execute(
+                "INSERT INTO Discounts (Code, ValidationScript, ValidationScriptType, ExpirationDate) VALUES (@0, @1, @2, @3)",
+                discount.Code, discount.ValidationScript, discount.ValidationScriptType, discount.ExpirationDate);
         }
 
         public void Delete(string code)

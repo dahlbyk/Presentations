@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -12,7 +11,7 @@ namespace Solutionizing.DynamicDemo.Data
     {
         public Discount GetByCode(string code)
         {
-            using(var conn = OpenConnection())
+            using (var conn = OpenConnection())
                 return conn.Query("SELECT * FROM Discounts WHERE Code = @code", new { code }).Select(row => new Discount(row)).First();
         }
 
@@ -22,16 +21,12 @@ namespace Solutionizing.DynamicDemo.Data
                 return conn.Query("SELECT * FROM Discounts").Select(row => new Discount(row));
         }
 
-        public void Save(dynamic discount)
+        public void Save(IDiscountDefinition discount)
         {
             using (var conn = OpenConnection())
-                conn.Execute("INSERT INTO Discounts (Code, ValidationScript, ValidationScriptType, ExpirationDate) VALUES (@c, @s, @t, @d)",
-                new{
-                    c = (string)discount.Code,
-                    s = (string)discount.ValidationScript,
-                    t = (string)discount.ValidationScriptType,
-                    d = (DateTime?)discount.ExpirationDate,
-                });
+                conn.Execute(
+                    "INSERT INTO Discounts (Code, ValidationScript, ValidationScriptType, ExpirationDate) VALUES (@Code, @ValidationScript, @ValidationScriptType, @ExpirationDate)",
+                    discount);
         }
 
         private static IDbConnection OpenConnection()

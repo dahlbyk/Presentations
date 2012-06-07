@@ -1,4 +1,5 @@
 ﻿using System;
+using ImpromptuInterface;
 using IronPython.Hosting;
 using IronRuby;
 using Microsoft.Scripting.Hosting;
@@ -7,13 +8,18 @@ namespace Solutionizing.DynamicDemo
 {
     public class Discount
     {
-        public Discount(dynamic discount)
+        public Discount(dynamic def)
+            : this((IDiscountDefinition)Impromptu.ActLike<IDiscountDefinition>(def))
+        {
+        }
+
+        public Discount(IDiscountDefinition discount)
         {
             Id = discount.Id;
             Code = discount.Code;
             ExpirationDate = discount.ExpirationDate;
 
-            IsValid = GetValidatorFromScript((string)discount.ValidationScriptType, (string)discount.ValidationScript);
+            IsValid = GetValidatorFromScript(discount.ValidationScriptType, discount.ValidationScript);
         }
 
         public int Id { get; private set; }

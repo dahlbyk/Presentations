@@ -142,7 +142,7 @@ namespace Solutionizing.DynamicDemo
         static readonly Action<string, int, string> logger = (file, lineNumber, error) =>
             Console.WriteLine("Error in {0}, line {1}: {2}", file, lineNumber, error);
 
-        static void Static()
+        public static void Static()
         {
             Func<string, Func<int, Action<string>>> curried =
                 f => l => e => logger(f, l, e);
@@ -152,7 +152,7 @@ namespace Solutionizing.DynamicDemo
             errorInProgram(16)("Missing return statement");
         }
 
-        static void Dynamic()
+        public static void Dynamic()
         {
             var curried = Impromptu.Curry(logger);
 
@@ -163,7 +163,7 @@ namespace Solutionizing.DynamicDemo
 
         #endregion
 
-        #region Discounts
+        #region Single Discount
 
         public static void SingleDiscountDemo()
         {
@@ -187,6 +187,12 @@ def isValid(order):
             discount.Dump();
         }
 
+        #endregion
+
+        #region Xml Discounts
+
+        private static readonly XDocument xml = XDocument.Load("discounts.xml");
+
         public static void XmlDiscounts()
         {
             var repo = new XmlDiscountRepository(xml);
@@ -200,6 +206,10 @@ def isValid(order):
 
             repo.DumpAll();
         }
+
+        #endregion
+
+        #region SQL Discounts
 
         public static void WebMatrixDataDiscounts()
         {
@@ -226,21 +236,20 @@ def isValid(order):
 
         #region Write
 
-        public static void WriteDiscount()
+        public static void WriteWithWebMatrix()
         {
             var writer = new WebMatrixDataDiscountRepository();
 
-            writer.Save(new
-            {
-                Code = "SEVEN",
-                ValidationScript = "def isValid(order): return order.ItemCount == 7",
-                ValidationScriptType = "text/python",
-                ExpirationDate = new DateTime(2012, 12, 12),
-            });
+            writer.Test("SEVEN", 7);
+        }
+
+        public static void WriteWithDapper()
+        {
+            var writer = new DapperDiscountRepository();
+
+            writer.Test("TEN", 10);
         }
 
         #endregion
-
-        private static readonly XDocument xml = XDocument.Load("discounts.xml");
     }
 }

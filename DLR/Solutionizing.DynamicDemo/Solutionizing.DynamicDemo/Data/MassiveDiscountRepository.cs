@@ -34,14 +34,19 @@ namespace Solutionizing.DynamicDemo.Data
             return result.Select(row => new Discount(row));
         }
 
-        public void Save(dynamic discount)
+        public void Save(IDiscountDefinition discount)
         {
+            throw new NotSupportedException("Massive insert does not like SQL CE");
+
+            // but it looks like this
             var table = new Discounts();
-            table.Insert(new {
-                Code = (string)discount.Code,
-                ValidationScript = (string)discount.ValidationScript,
-                ValidationScriptType = (string)discount.ValidationScriptType,
-                ExpirationDate = (DateTime?)discount.ExpirationDate,
+
+            table.Insert(new
+            {
+                discount.Code,
+                discount.ExpirationDate,
+                discount.ValidationScript,
+                discount.ValidationScriptType,
             });
         }
     }

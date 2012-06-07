@@ -1,4 +1,5 @@
 using System;
+using ImpromptuInterface;
 using Solutionizing.DynamicDemo.Data;
 
 namespace Solutionizing.DynamicDemo
@@ -18,6 +19,17 @@ namespace Solutionizing.DynamicDemo
         {
             foreach (var discount in repo.GetAll())
                 discount.Dump();
+        }
+
+        public static void Test(this IDiscountWriter writer, string code, int expectedItems)
+        {
+            writer.Save(new
+            {
+                Code = code,
+                ValidationScript = "def isValid(order): return order.ItemCount == " + expectedItems,
+                ValidationScriptType = "text/python",
+                ExpirationDate = DateTime.Today.AddYears(1),
+            }.ActLike<IDiscountDefinition>());
         }
 
         private static readonly Order[] orders = new[]

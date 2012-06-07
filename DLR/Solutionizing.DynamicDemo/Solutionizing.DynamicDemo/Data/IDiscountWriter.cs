@@ -7,6 +7,6 @@ namespace Solutionizing.DynamicDemo.Data
 {
     public interface IDiscountWriter
     {
-        void Save(dynamic discount);
+        void Save(IDiscountDefinition discount);
     }
 }
