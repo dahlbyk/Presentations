@@ -7,7 +7,7 @@ using Solutionizing.DynamicDemo.Data;
 
 namespace Solutionizing.DynamicDemo
 {
-    static class Program
+    public static class Program
     {
         #region Sandbox
 
@@ -112,6 +112,27 @@ namespace Solutionizing.DynamicDemo
             person.Sing();
 
             // http://code.google.com/p/impromptu-interface/wiki/UsageBuilder
+
+            #region Duck Typing
+
+            //IPerson duckTypedPerson = Impromptu.ActLike<IPerson>(person);
+            //duckTypedPerson.LastName = "Martin";
+
+            //IGreet duckTypedGreeter = Impromptu.ActLike<IGreet>(person);
+            //Console.WriteLine(duckTypedGreeter.Greet("Clean coder:"));
+
+            #endregion
+        }
+
+        public interface IPerson
+        {
+            string FirstName { get; }
+            string LastName { get; set; }
+        }
+
+        public interface IGreet
+        {
+            string Greet(string greeting);
         }
 
         #endregion
