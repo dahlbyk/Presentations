@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,22 +17,30 @@ namespace AbstractToYield
     {
         static void Query()
         {
-            var nums = from n in Enumerable.Range(1, 100)
-                       select n.ToString()
-                           into s
+            // Pretend we don't know the type
+            IEnumerable letters = Enumerable.Range('A', 26).Select(l => (char)l);
 
-                           where s[0] == '1'
-                           group s by s.Last()
-                               into g
+            var words = new[] { "code", "camp", "C#", "Visual Studio", "LINQ" };
 
-                               orderby g.Min(s => s.Length) descending, g.Key
-                               select new
-                               {
-                                   g.Key,
-                                   N = string.Join(", ", g)
-                               };
+            var queried = from w in words
 
-            nums.Dump();
+                          group w by char.ToUpper(w[0])
+                              into g
+
+                              join char l in letters
+                                  on (g.Key) equals l
+
+                              let wordList = string.Join(", ", g)
+
+                              orderby g.Max(w => w.Length) descending, g.Count()
+
+                              select new
+                              {
+                                  g.Key,
+                                  wordList
+                              };
+
+            queried.Dump();
         }
 
         static void MyLinq()

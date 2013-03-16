@@ -35,7 +35,7 @@ namespace AbstractToYield
     {
         public static void Dump<T>(this T @this)
         {
-            if (@this is IEnumerable && typeof(T) != typeof(string))
+            if (@this is IEnumerable && !(@this is string))
             {
                 foreach (var x in (IEnumerable)@this)
                     x.Dump();
@@ -94,12 +94,14 @@ namespace AbstractToYield
 
         void Test()
         {
-            ToString().Dump();
-
             this.Dump();
 
             MayBeOverriden();
             MustBeImplemented.Dump();
+
+            var changeMeMaybe = "before";
+            CanHazARef(ref changeMeMaybe);
+            changeMeMaybe.Dump();
 
             "".Dump();
             ParamsExample("foo", "bar", "baz");
@@ -115,6 +117,16 @@ namespace AbstractToYield
         protected override string MustBeImplemented
         {
             get { return "An implementation!"; }
+        }
+
+        public void CanHazARef(ref string thing)
+        {
+            // Don't have to write to thing
+        }
+
+        public void CanHazAnOut(out string thing)
+        {
+            thing = "Compile error if I don't set thing";
         }
 
         public void ParamsExample(params string[] listOfThings)

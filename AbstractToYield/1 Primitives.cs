@@ -2,10 +2,31 @@
 
 namespace AbstractToYield
 {
+    /*  Things you probably never need
+     *
+     *  unsafe                      // Member modifier
+     *  unsafe { ... }
+     *  stackalloc
+     *  fixed (...) { ... }
+     */
+
     class Primitives
     {
-        void ValueTypes()
+        void BuildInTypes()
         {
+            Type @void = typeof(void);
+            @void.Dump();
+
+            // void aVoid = default(void);
+
+            object @object = null;
+            string @string = "string";
+
+            // Pointers!
+            IntPtr ptr = IntPtr.Zero;
+            UIntPtr uptr = UIntPtr.Zero;
+
+            // Boolean
             bool @bool = true;
 
             // Integral
@@ -26,7 +47,6 @@ namespace AbstractToYield
 
             var awesomeness = (Awesomeness)2;       // Lots
             var dwight = Likes.Bears | Likes.Beats | Likes.BattlestarGalactica;
-            dwight.Dump();
         }
     }
 

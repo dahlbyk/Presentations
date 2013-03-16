@@ -39,41 +39,44 @@ namespace AbstractToYield
          *  checked { ... }
          *  unchecked { ... }
          *
-         *  fixed (...) { ... }         // unsafe
          *  lock (...) { ... }
+         *  using (...) { ... }
          */
 
         void Test()
         {
-            do
-            {
-                switch (DateTime.Now.Second % 6)
+            using (new DumpingDisposable("BOOM"))
+                do
                 {
-                    case 0:
-                    case 2:
-                    case 4:
-                        {
-                            var s = "even";
-                            s.Dump();
-                            // continue;
-                        }
-                        break;
-                    case 3:
-                        "three".Dump();
-                        break;
-                    default:
-                        {
-                            var s = "neither";
-                            s.Dump();
-                            goto skipCount;
-                        }
-                }
-                simpleCount.Dump();
+                    switch (DateTime.Now.Ticks % 6)
+                    {
+                        case 0:
+                        case 2:
+                        case 4:
+                            {
+                                var s = "even";
+                                s.Dump();
+                                continue;
+                            }
+                        case 5:
+                            "FIVE! It's quitting time.".Dump();
+                            return;
+                        case 3:
+                            "three".Dump();
+                            break;
+                        default:
+                            {
+                                var s = "neither";
+                                s.Dump();
+                                goto skipCount;
+                            }
+                    }
+                    simpleCount.Dump();
 
-            skipCount:
-                "...".Dump();
+                skipCount:
+                    "...".Dump();
 
-            } while (TestShouldContinue());
+                } while (TestShouldContinue());
         }
 
         private int simpleCount;
@@ -81,16 +84,8 @@ namespace AbstractToYield
         private bool TestShouldContinue()
         {
             "Continue?".Dump();
-            Thread.Sleep(1200);
+            Thread.Sleep(300);
             return simpleCount++ < 5;
-        }
-
-        void Four()
-        {
-            var words = new[] { "one", "two", "three" };
-
-            for (var i = 0; i < words.Length; i++)
-                words[i].Dump();
         }
 
         void Each()
@@ -108,6 +103,22 @@ namespace AbstractToYield
         {
             yield return "first";
             yield return 2;
+        }
+    }
+
+    class DumpingDisposable : IDisposable
+    {
+        private readonly string message;
+
+        public DumpingDisposable(string message)
+        {
+            this.message = message;
+        }
+
+        public void Dispose()
+        {
+            "Disposing...".Dump();
+            message.Dump();
         }
     }
 }
