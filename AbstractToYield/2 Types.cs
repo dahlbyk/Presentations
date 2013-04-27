@@ -51,6 +51,11 @@ namespace AbstractToYield
             C.WriteLine(ReferenceEquals(@this, null) ? "(null)" : @this.ToString(format, formatProvider));
         }
 
+        public static string FormatWith(this string format, params object[] args)
+        {
+            return string.Format(format, args);
+        }
+
         public static T? ParseOrDefault<T>(
             this string s, TryParser<T> parser) where T : struct
         {
@@ -77,6 +82,11 @@ namespace AbstractToYield
         protected virtual void MayBeOverriden()
         {
             notOverridenMessage.Dump();
+        }
+
+        protected virtual int this[int i]
+        {
+            get { return value * i; }
         }
     }
 
@@ -106,7 +116,7 @@ namespace AbstractToYield
             "".Dump();
             ParamsExample("foo", "bar", "baz");
 
-            DynamicLength(new[] { 1, 2, 3 });
+            DynamicLength(new[] { 1, 2, this[3] });
         }
 
         public new string ToString()
@@ -117,6 +127,12 @@ namespace AbstractToYield
         protected override string MustBeImplemented
         {
             get { return "An implementation!"; }
+        }
+
+        public string this[string name, int i]
+        {
+            get { return "{0} asked for {1}.".FormatWith(name, i); }
+            set { "{0} tried to set {1} to {2}.".FormatWith(name, i, value).Dump(); }
         }
 
         public void CanHazARef(ref string thing)

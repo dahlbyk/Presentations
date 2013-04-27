@@ -45,9 +45,17 @@ namespace AbstractToYield
             double @double = Double.MaxValue;       // 1.7e308d
             decimal @decimal = Decimal.MaxValue;    // 7.9e28m
 
+            var nada = (Nada) 3;
+            nada.Dump();
+
             var awesomeness = (Awesomeness)2;       // Lots
-            var dwight = Likes.Bears | Likes.Beats | Likes.BattlestarGalactica;
+            var dwight = Likes.Bears | Likes.Beets | Likes.BattlestarGalactica;
+            dwight.Dump();
         }
+    }
+
+    internal enum Nada
+    {
     }
 
     enum Awesomeness
@@ -61,7 +69,8 @@ namespace AbstractToYield
     enum Likes
     {
         Bears = 1,
-        Beats = 2,
+        Beets = 2,
         BattlestarGalactica = 4,
+        Dwight = Bears | Beets | BattlestarGalactica,
     }
 }
