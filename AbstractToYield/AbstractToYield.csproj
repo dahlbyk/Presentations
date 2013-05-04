@@ -36,8 +36,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="1 Primitives.cs" />
-    <Compile Include="2 Types.cs" />
-    <Compile Include="3 Operators.cs" />
+    <Compile Include="3 Types.cs" />
+    <Compile Include="2 Operators.cs" />
     <Compile Include="6 LINQ.cs" />
     <Compile Include="4 Statements.cs" />
     <Compile Include="5 Events.cs" />

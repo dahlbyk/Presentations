@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AbstractToYield
@@ -8,30 +10,46 @@ namespace AbstractToYield
         async void Demo()
         {
             "Waiting...".Dump();
-            Task<string> task = WaitSynch();
+            Task<string> task = WaitAsynch();
 
             for (int i = 0; i < 12; i++)
             {
                 i.Dump();
-                Thread.Sleep(500);
+                Thread.Sleep(250);
             }
 
             var result = await task;
             result.Dump();
         }
 
-        public async Task<string> WaitAsynch()
+        public async Task<string> WaitSynch()
         {
-            await Task.Delay(5000);
+            Thread.Sleep(3000);
             "Finished".Dump();
             return "Returned";
         }
 
-        public async Task<string> WaitSynch()
+        public async Task<string> WaitAsynch()
         {
-            Thread.Sleep(5000);
+            await Task.Delay(3000);
             "Finished".Dump();
             return "Returned";
+        }
+
+        public async Task<string> WaitTimeSpan()
+        {
+            await TimeSpan.FromMilliseconds(3000);
+            "Finished".Dump();
+            return "Returned";
+        }
+    }
+
+    // http://blogs.msdn.com/b/pfxteam/archive/2011/01/13/10115642.aspx
+    static class AsyncExtensions
+    {
+        public static TaskAwaiter GetAwaiter(this TimeSpan timespan)
+        {
+            return Task.Delay(timespan).GetAwaiter();
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿					/*********************************\
-					*                                 *
-					*        abstract to yield        *
-					* How well do you really know C#? *
-					*                                 *
-					***********************************
-					*                                 *
-					*          Keith Dahlby           *
-					*            @dahlbyk             *
-					*                                 *
-					*    http://spkr8.com/t/21951     *
-					\*********************************/
+﻿/*********************************\
+*                                 *
+*        abstract to yield        *
+* How well do you really know C#? *
+*                                 *
+***********************************
+*                                 *
+*          Keith Dahlby           *
+*            @dahlbyk             *
+*                                 *
+*    http://spkr8.com/t/22271     *
+\*********************************/

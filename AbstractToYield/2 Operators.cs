@@ -89,7 +89,7 @@ namespace AbstractToYield
      *  x | y
      */
 
-    /*  Conditional
+    /*  Conditional (short-circuit)
      *  // in order of precedence
      *
      *  x && y
@@ -117,7 +117,12 @@ namespace AbstractToYield
      *  x <<= y
      *  x >>= y
      *
-     *  =>
+     *  x => y
+     *  x => { … }
+     *  () => …
+     *  (x) => …
+     *  (x, y) => …
+     *  (T x, U y) => …
      */
 
     /*  Misc Operators
@@ -170,21 +175,38 @@ namespace AbstractToYield
 
     public class Operators
     {
+        private delegate decimal Halver(int value);
+
+        public void Lambda()
+        {
+            Halver h = delegate(int value) { return value / 2m; };
+            h(3).Dump();
+        }
+
         public void Sandbox()
         {
             Money m1 = 15;
             Money m2 = -17.5m;
+            Money m3 = -20;
 
-            var sum = m1 + m2;
+            var sum = m1 + m2 + +m3;
             sum.Dump();
 
-            var res = m1 + m2;
-            res.Dump("C", CultureInfo.InvariantCulture);
+            sum.Dump("C", CultureInfo.InvariantCulture);
         }
     }
 
     public partial struct Money
     {
+        public static readonly Money Zero = default(Money);
+
+        private readonly decimal value;
+
+        private Money(decimal value)
+        {
+            this.value = value;
+        }
+
         #region Conversion (Unary)
 
         public static implicit operator Money(decimal d)

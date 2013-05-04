@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace AbstractToYield
@@ -90,10 +91,23 @@ namespace AbstractToYield
 
         void Each()
         {
-            var notEnumerable = new NotIEnumerable();
+            var notEnumerable = Sing(false);
+
+            Console.WriteLine("Before foreach");
 
             foreach (var x in notEnumerable)
                 x.Dump();
+        }
+
+        IEnumerable<string> Sing(bool really)
+        {
+            if (!really)
+                throw new InvalidOperationException("j/k lol");
+
+            yield return "Head";
+            yield return "Shoulders";
+            yield return "Knees";
+            yield return "Toes";
         }
     }
 
@@ -101,6 +115,9 @@ namespace AbstractToYield
     {
         public IEnumerator GetEnumerator()
         {
+            if (DateTime.Now.Second % 10 == 0)
+                yield break;
+
             yield return "first";
             yield return 2;
         }

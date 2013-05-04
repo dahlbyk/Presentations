@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace AbstractToYield
 {
@@ -15,8 +16,6 @@ namespace AbstractToYield
         void BuildInTypes()
         {
             Type @void = typeof(void);
-            @void.Dump();
-
             // void aVoid = default(void);
 
             object @object = null;
@@ -45,24 +44,25 @@ namespace AbstractToYield
             double @double = Double.MaxValue;       // 1.7e308d
             decimal @decimal = Decimal.MaxValue;    // 7.9e28m
 
-            var nada = (Nada) 3;
-            nada.Dump();
+            // Enum
+            var chocolatey = Awesomeness.Lots;
+            chocolatey.Dump();
 
-            var awesomeness = (Awesomeness)2;       // Lots
-            var dwight = Likes.Bears | Likes.Beets | Likes.BattlestarGalactica;
-            dwight.Dump();
+            var keith = Likes.Bears | Likes.BattlestarGalactica;
+            keith.Dump();
+
+            // Inferred vs Dynamic
+            var inferMePlz = keith.ToString().Split(',');
+            dynamic figureMeOutLater = inferMePlz;
+            Console.WriteLine(figureMeOutLater.Length);
         }
-    }
-
-    internal enum Nada
-    {
     }
 
     enum Awesomeness
     {
-        None = 0,
-        Some = 1,
-        Lots = 2,
+        None,
+        Some = 2,
+        Lots,
     }
 
     [Flags]
