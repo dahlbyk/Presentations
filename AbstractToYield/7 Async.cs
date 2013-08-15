@@ -7,7 +7,12 @@ namespace AbstractToYield
 {
     class Async
     {
-        async void Demo()
+        void Demo2()
+        {
+            Demo().Result.Dump();
+        }
+
+        async Task<string> Demo()
         {
             "Waiting...".Dump();
             Task<string> task = WaitAsynch();
@@ -18,8 +23,7 @@ namespace AbstractToYield
                 Thread.Sleep(250);
             }
 
-            var result = await task;
-            result.Dump();
+            return await task;
         }
 
         public async Task<string> WaitSynch()
@@ -36,9 +40,9 @@ namespace AbstractToYield
             return "Returned";
         }
 
-        public async Task<string> WaitTimeSpan()
+        public async Task<string> WaitTimeSpan(int seconds = 1)
         {
-            await TimeSpan.FromMilliseconds(3000);
+            await TimeSpan.FromSeconds(seconds);
             "Finished".Dump();
             return "Returned";
         }

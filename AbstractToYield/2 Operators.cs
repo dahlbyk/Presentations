@@ -189,7 +189,7 @@ namespace AbstractToYield
             Money m2 = -17.5m;
             Money m3 = -20;
 
-            var sum = m1 + m2 + +m3;
+            var sum = +(m1 + m2 + m3);
             sum.Dump();
 
             sum.Dump("C", CultureInfo.InvariantCulture);

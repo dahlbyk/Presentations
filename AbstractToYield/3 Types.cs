@@ -18,8 +18,8 @@ namespace AbstractToYield
      *
      *  Defaults
      *
-     *  class           internal
-     *  nested class    private
+     *  type            internal
+     *  nested type     private
      *  member          private
      */
 
@@ -44,25 +44,20 @@ namespace AbstractToYield
 
         public void MyMethod() { Debug.Assert(myField != null, "myField is null!"); }
 
-        public double MyProperty { get; set; }
+        public double MyProperty { get; private set; }
 
         public event EventHandler MyEvent;
 
         public char this[int i]
         {
             get { return myField[i]; }
-            private set
-            {
-                var copy = new char[myField.Length];
-                myField.CopyTo(0, copy, 0, myField.Length);
-                copy[i] = value;
-                myField = new string(copy);
-            }
         }
 
-        public static MyClass Build(object field = null, double prop = 0)
+        public static MyClass Build(
+            object field = null,
+            double prop = MyStatic.TheAnswerToLifeTheUniverseAndEverything)
         {
-            return new MyClass
+            return new MyClass()
             {
                 myField = field == null ? null : field.ToString(),
                 MyProperty = prop,
@@ -71,7 +66,7 @@ namespace AbstractToYield
 
         static void Test()
         {
-            var c = Build(prop: MyStatic.TheAnswerToLifeTheUniverseAndEverything);
+            var c = Build(prop: 3);
             c.MyMethod();
         }
     }
@@ -86,15 +81,20 @@ namespace AbstractToYield
             C.WriteLine("Welcome to Indiana, where pi is {0}.", PiInIndiana);
         }
 
-        static partial void PrePiCalculation();
+        static partial void PrePiCalculation(ref int? foo);
         static partial void PostPiCalculation(double pi);
 
         private static double GetPi()
         {
-            PrePiCalculation();
-            const int pi = 3;
+            int? newPi = null;
+            PrePiCalculation(ref newPi);
+            int pi = newPi ?? 3;
             PostPiCalculation(pi);
             return pi;
+        }
+
+        public static void Foo()
+        {
         }
 
         public static NestedClass MyProperty { get; set; }
@@ -106,9 +106,10 @@ namespace AbstractToYield
 
     static partial class MyStatic
     {
-        static partial void PrePiCalculation()
+        static partial void PrePiCalculation(ref int? newPi)
         {
             C.WriteLine("About to calculate pi...");
+            newPi = 5;
         }
     }
 
@@ -247,19 +248,19 @@ namespace AbstractToYield
     abstract class MustBeExtended
     {
         private readonly int value;
-        protected readonly string notOverridenMessage;
+        protected readonly string notOverriddenMessage;
 
         protected MustBeExtended(int value)
         {
             this.value = value;
-            notOverridenMessage = "Not overriden: " + value;
+            notOverriddenMessage = "Not overridden: " + value;
         }
 
         public abstract override int GetHashCode();
 
-        protected virtual void MayBeOverriden()
+        protected virtual void MayBeOverridden()
         {
-            notOverridenMessage.Dump();
+            notOverriddenMessage.Dump();
         }
     }
 
@@ -295,7 +296,7 @@ namespace AbstractToYield
             this.Dump();
             this.ToString().Dump();
 
-            MayBeOverriden();
+            MayBeOverridden();
 
             var changeMeMaybe = "before";
             CanHazARef(ref changeMeMaybe);
@@ -312,9 +313,8 @@ namespace AbstractToYield
 
     #region Generics
 
-    static class MyStatic<TClass, TStruct, TNewComparable, TEnumerable>
+    static class MyStatic<TClass, TNewComparable, TEnumerable>
         where TClass : class
-        where TStruct : struct
         where TNewComparable : IComparable, new()
         where TEnumerable : IEnumerable<TNewComparable>
     {
@@ -343,8 +343,8 @@ namespace AbstractToYield
     {
         void Sandbox()
         {
-            MyStatic<string, int, decimal, IEnumerable<decimal>>.Touch<bool>();
-            MyStatic<string, int, decimal, IEnumerable<decimal>>.Touch<int>();
+            MyStatic<string, int, IEnumerable<int>>.Touch<bool>();
+            MyStatic<string, decimal, IEnumerable<decimal>>.Touch<int>();
         }
     }
 
