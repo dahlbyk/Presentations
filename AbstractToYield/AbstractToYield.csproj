@@ -36,12 +36,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="1 Primitives.cs" />
-    <Compile Include="3 Types.cs" />
+    <Compile Include="9 Inheritance.cs" />
     <Compile Include="2 Operators.cs" />
-    <Compile Include="6 LINQ.cs" />
-    <Compile Include="4 Statements.cs" />
-    <Compile Include="5 Events.cs" />
-    <Compile Include="7 Async.cs" />
+    <Compile Include="5 LINQ.cs" />
+    <Compile Include="3 Statements.cs" />
+    <Compile Include="7 Events.cs" />
+    <Compile Include="4 Async.cs" />
+    <Compile Include="8 Dynamic.cs" />
+    <Compile Include="6 Types.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="0 Welcome.txt" />

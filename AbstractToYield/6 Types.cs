@@ -25,8 +25,10 @@ namespace AbstractToYield
 
     class MyClass
     {
+        // Field
         string myField;
 
+        // Constructors
         public MyClass(string myParam)
         {
             this.myField = myParam ?? "";
@@ -37,9 +39,10 @@ namespace AbstractToYield
         {
         }
 
+        // Destructor/Finalizer
         ~MyClass()
         {
-            C.WriteLine("Finish him!");
+            // Don't use these
         }
 
         public void MyMethod() { Debug.Assert(myField != null, "myField is null!"); }
@@ -158,14 +161,6 @@ namespace AbstractToYield
         #endregion
     }
 
-    interface IAmAnInterface<in T, out U>
-    {
-        void MyMethod(T value);
-        bool MyProperty { get; set; }
-        U MyReadOnlyProperty { get; }
-        event EventHandler MyEvent;
-    }
-
     public delegate bool TryParser<T>(string s, out T result);
 
     // delegate void Action();
@@ -178,9 +173,26 @@ namespace AbstractToYield
     // delegate R Func<in T1, in T2, out R>(T1 arg1, T2 arg2);
     // delegate R Func<in T1, in T2, …, out R>(T1 arg1, T2 arg2, …);
 
-    class Sandbox
+    class GenericVariance
     {
-        void Generic_variance()
+        void Array()
+        {
+            string[] @as = new[] { "foo", "bar" };
+            object[] ao = @as;
+        }
+
+        void Interfaces()
+        {
+            // IComparer<in T>
+            IComparer<object> co = Comparer<object>.Default;
+            IComparer<string> cs = co;
+
+            // IEnumerable<out T>
+            IEnumerable<string> es = Enumerable.Empty<string>();
+            IEnumerable<object> eo = es;
+        }
+
+        void Delegates()
         {
             Func<string> f = () => "hi";
             Func<object> g = f;
@@ -209,7 +221,7 @@ namespace AbstractToYield
             }
             else
             {
-                Console.WriteLine(ReferenceEquals(@this, null) ? "(null)" : @this.ToString());
+                C.WriteLine(ReferenceEquals(@this, null) ? "(null)" : @this.ToString());
             }
         }
 
@@ -218,7 +230,7 @@ namespace AbstractToYield
                                    IFormatProvider formatProvider = null)
             where T : IFormattable
         {
-            Console.WriteLine(ReferenceEquals(@this, null) ? "(null)"
+            C.WriteLine(ReferenceEquals(@this, null) ? "(null)"
                             : @this.ToString(format, formatProvider));
         }
 
@@ -240,113 +252,4 @@ namespace AbstractToYield
             return parser(s, out result) ? result : default(T?);
         }
     }
-
-    #region Inheritance
-
-    sealed class CannotBeExtended { }
-
-    abstract class MustBeExtended
-    {
-        private readonly int value;
-        protected readonly string notOverriddenMessage;
-
-        protected MustBeExtended(int value)
-        {
-            this.value = value;
-            notOverriddenMessage = "Not overridden: " + value;
-        }
-
-        public abstract override int GetHashCode();
-
-        protected virtual void MayBeOverridden()
-        {
-            notOverriddenMessage.Dump();
-        }
-    }
-
-    class CanBeExtended : MustBeExtended
-    {
-        public CanBeExtended()
-            : this(5)
-        {
-        }
-
-        public CanBeExtended(int value)
-            : base(value)
-        {
-        }
-
-        public override int GetHashCode()
-        {
-            return 42;
-        }
-
-        public void CanHazARef(ref string thing)
-        {
-            // Don't have to write to thing
-        }
-
-        public void CanHazAnOut(out string thing)
-        {
-            thing = "Compile error if I don't set thing";
-        }
-
-        void Test()
-        {
-            this.Dump();
-            this.ToString().Dump();
-
-            MayBeOverridden();
-
-            var changeMeMaybe = "before";
-            CanHazARef(ref changeMeMaybe);
-            changeMeMaybe.Dump();
-        }
-
-        public new string ToString()
-        {
-            return "I am CanBeExtended, hear me rawr!";
-        }
-    }
-
-    #endregion
-
-    #region Generics
-
-    static class MyStatic<TClass, TNewComparable, TEnumerable>
-        where TClass : class
-        where TNewComparable : IComparable, new()
-        where TEnumerable : IEnumerable<TNewComparable>
-    {
-        private static readonly HashSet<Type> types = BuildTypeSet();
-
-        private static HashSet<Type> BuildTypeSet()
-        {
-            Console.WriteLine("Building type set for {0}...", typeof(TClass));
-            return new HashSet<Type>();
-        }
-
-        public static void Touch<T>()
-        {
-            types.Add(typeof (T));
-            Console.WriteLine("Current type sets...");
-            types.Dump();
-        }
-
-        public static TNewComparable GetFirstGreaterThan(TEnumerable comparables, TNewComparable other)
-        {
-            return comparables.FirstOrDefault(c => c.CompareTo(other) > 0);
-        }
-    }
-
-    class GenericSandbox
-    {
-        void Sandbox()
-        {
-            MyStatic<string, int, IEnumerable<int>>.Touch<bool>();
-            MyStatic<string, decimal, IEnumerable<decimal>>.Touch<int>();
-        }
-    }
-
-    #endregion
 }

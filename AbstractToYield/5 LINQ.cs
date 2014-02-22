@@ -43,19 +43,19 @@ namespace AbstractToYield
             queried.Dump();
         }
 
+
         static void MyLinq()
         {
             var nums = Enumerable.Range(0, 50);
 
-            var filtered = nums.MyWhere(delegate(int n)
-                                            {
-                                                return n%4 == 1;
-                                            });
+            var filtered = from n in nums
+                           where n % 4 == 1
+                           select n;
 
             filtered.Dump();
         }
 
-        static IEnumerable<int> MyWhere(
+        static IEnumerable<int> Where(
             this IEnumerable<int> source, Func<int, bool> predicate)
         {
             foreach (var x in source)
@@ -63,6 +63,8 @@ namespace AbstractToYield
                     yield break;
                 else if (predicate(x))
                     yield return x;
+                //else
+                //    "Skip: {0}".FormatWith(x).Dump();
         }
     }
 }

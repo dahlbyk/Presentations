@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace AbstractToYield
 {
     /*  Things you probably never need
      *
+     *  volatile                    // Member modifier
      *  unsafe                      // Member modifier
      *  unsafe { ... }
      *  stackalloc
@@ -50,11 +50,6 @@ namespace AbstractToYield
 
             var keith = Likes.Bears | Likes.BattlestarGalactica;
             keith.Dump();
-
-            // Inferred vs Dynamic
-            var inferMePlz = keith.ToString().Split(',');
-            dynamic figureMeOutLater = inferMePlz;
-            Console.WriteLine(figureMeOutLater.Length);
         }
     }
 

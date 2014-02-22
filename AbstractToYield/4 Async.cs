@@ -7,15 +7,18 @@ namespace AbstractToYield
 {
     class Async
     {
-        void Demo2()
+        private static string Return(
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0)
         {
-            Demo().Result.Dump();
+            return "Returned from {0}\n{1} @ line {2}".FormatWith(memberName, filePath, lineNumber);
         }
 
-        async Task<string> Demo()
+        async void Demo()
         {
             "Waiting...".Dump();
-            Task<string> task = WaitAsynch();
+            Task<string> task = WaitSynch(2);
 
             for (int i = 0; i < 12; i++)
             {
@@ -23,28 +26,29 @@ namespace AbstractToYield
                 Thread.Sleep(250);
             }
 
-            return await task;
+            var result = await task;
+            result.Dump();
         }
 
-        public async Task<string> WaitSynch()
+        public async Task<string> WaitSynch(int seconds = 1)
         {
-            Thread.Sleep(3000);
+            Thread.Sleep(1000 * seconds);
             "Finished".Dump();
-            return "Returned";
+            return Return();
         }
 
-        public async Task<string> WaitAsynch()
+        public async Task<string> WaitAsynch(int seconds = 1)
         {
-            await Task.Delay(3000);
+            await Task.Delay(1000 * seconds);
             "Finished".Dump();
-            return "Returned";
+            return Return();
         }
 
         public async Task<string> WaitTimeSpan(int seconds = 1)
         {
             await TimeSpan.FromSeconds(seconds);
             "Finished".Dump();
-            return "Returned";
+            return Return();
         }
     }
 

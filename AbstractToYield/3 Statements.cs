@@ -89,15 +89,29 @@ namespace AbstractToYield
             return simpleCount++ < 5;
         }
 
+
+        class NotIEnumerable
+        {
+            public IEnumerator GetEnumerator()
+            {
+                if (DateTime.Now.Second % 10 == 0)
+                    yield break;
+
+                yield return "first";
+                yield return 2;
+            }
+        }
+
         void Each()
         {
-            var notEnumerable = Sing(false);
+            var notEnumerable = new NotIEnumerable();
 
             Console.WriteLine("Before foreach");
 
             foreach (var x in notEnumerable)
                 x.Dump();
         }
+
 
         IEnumerable<string> Sing(bool really)
         {
@@ -108,18 +122,6 @@ namespace AbstractToYield
             yield return "Shoulders";
             yield return "Knees";
             yield return "Toes";
-        }
-    }
-
-    class NotIEnumerable
-    {
-        public IEnumerator GetEnumerator()
-        {
-            if (DateTime.Now.Second % 10 == 0)
-                yield break;
-
-            yield return "first";
-            yield return 2;
         }
     }
 
