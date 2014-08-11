@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "EmailService\EmailService.csproj", "{7FDB0DE5-5F87-4ABB-B5E1-FB9C2A15A2F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{EFF2B805-05C5-41C8-B897-55771FB9BA6E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7FDB0DE5-5F87-4ABB-B5E1-FB9C2A15A2F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FDB0DE5-5F87-4ABB-B5E1-FB9C2A15A2F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FDB0DE5-5F87-4ABB-B5E1-FB9C2A15A2F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FDB0DE5-5F87-4ABB-B5E1-FB9C2A15A2F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFF2B805-05C5-41C8-B897-55771FB9BA6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFF2B805-05C5-41C8-B897-55771FB9BA6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFF2B805-05C5-41C8-B897-55771FB9BA6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFF2B805-05C5-41C8-B897-55771FB9BA6E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

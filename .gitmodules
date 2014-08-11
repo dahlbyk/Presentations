@@ -1,0 +1,3 @@
+[submodule "OWIN/Tavis.Owin"]
+	path = OWIN/Tavis.Owin
+	url = git@github.com:tavis-software/Tavis.Owin.git
