@@ -9,13 +9,14 @@ namespace EmailService
     class EmailService : ServiceControl
     {
         private IDisposable app;
+        public static readonly string Url = "http://localhost:23456";
 
         public bool Start(HostControl hostControl)
         {
 
             Observable.Interval(TimeSpan.FromSeconds(10)).Subscribe(_ => Queue.SendAll());
 
-            app = WebApp.Start<Pipeline>("http://localhost:23456");
+            app = WebApp.Start<Pipeline>(Url);
 
             Queue.Enqueued.Subscribe(
                 next => Console.WriteLine("{0:hh:mm:ss} Sending '{1}'", DateTime.Now, next.Subject));

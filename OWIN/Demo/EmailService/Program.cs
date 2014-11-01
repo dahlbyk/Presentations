@@ -1,4 +1,6 @@
-﻿using Topshelf;
+﻿using System;
+using System.Diagnostics;
+using Topshelf;
 
 namespace EmailService
 {
@@ -14,6 +16,9 @@ namespace EmailService
                     host.RunAsNetworkService();
 
                     host.Service<EmailService>();
+
+                    if (Environment.UserInteractive)
+                        Process.Start(EmailService.Url); // Spawn browser
                 });
         }
     }
