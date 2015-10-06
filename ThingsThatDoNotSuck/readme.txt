@@ -1,0 +1,5 @@
+- Dapper
+- NUnit - TestCase + TestCaseSource
+- Shouldly
+- AutoMapper
+- Type Scanning
