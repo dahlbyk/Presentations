@@ -9,7 +9,13 @@
 ## I've also been adding features as I come across needs for them, and you'll contribute your 
 ## improvements back to the PowerShell Script repository as well.
 ##################################################################################################
-## Revision History (version 3.4.1)
+## Revision History (version 3.5.0)
+## 3.5.0 Added:    StartDelay parameter added
+##       Added:	   SkipInstructions parameter added
+##       Added:    The help section 'Improving ideas' added
+##       Addde:    DelayAfterComment switch added, add wait time after write comments to screen
+##       Fixed:    Some comments to code added
+##       Fixed:    Restoring oryginal prompt corrected
 ## 3.4.1 Fixed:    Switches SkipAddTheEndLine and SkipAddDemoTime corrected
 ## 3.4.0 Fixed:    FullAuto mode corrected
 ##       Fixed:    Small corrections of code based on PSScriptAnalyzer 1.6.0 sugestions
@@ -40,7 +46,12 @@
 ##     - Added:    Automatically append an empty line to the end of the demo script
 ##                 so you have a chance to "go back" after the last line of you demo
 ##################################################################################################
-##
+## Improving ideas
+## - convert script to function
+## - add padding zero(s) to command number
+## - remove char '?' from the prompt in the FullAuto mode
+##################################################################################################
+
 param (
     $file = ".\demo.txt",
     [int]$command = 0,
@@ -48,9 +59,12 @@ param (
     [System.ConsoleColor]$commandColor = "White",
     [System.ConsoleColor]$commentColor = "Green",
     [System.ConsoleColor]$backgroundColor = "black",
+	[int]$StartDelay,
+	[switch]$SkipInstructions,
     [switch]$FullAuto,
     [int]$AutoSpeed = 3,
-    [switch]$NoPauseAfterExecute,
+	[int]$DelayAfterComment = 1,
+	[switch]$NoPauseAfterExecute,
     [switch]$UseMyPrompt, #To customize change definition in the function Prompt (below)
     [switch]$SkipAddTheEndLine,
     [switch]$SkipAddDemoTime    
@@ -65,8 +79,8 @@ If ($UseMyPrompt.ispresent) {
     Prompt
 }
 
-# a function to set minimal prompt
-function Prompt { "[PS] >" }
+# More about constructing prompts here: https://technet.microsoft.com/en-us/library/hh847739.aspx
+Function prompt { "[PS] >" }
 
 # A function for reading in a character 
 function Read-Char() {
@@ -99,10 +113,11 @@ while (-not (Test-Path $file)) {
     $file = Resolve-Path $file
 }
 
-# More about constructing prompts here: https://technet.microsoft.com/en-us/library/hh847739.aspx
-Function prompt { "[PS] >" }
-
 Clear-Host
+
+If ( $StarDelay -gt 0 ) {
+	Start-Sleep -seconds $StartDelay
+}
 
 $_lines = Get-Content $file
 
@@ -113,6 +128,7 @@ If (-not $SkipAddTheEndLine.IsPresent) {
 
 $_starttime = [DateTime]::now
 
+#Overwrite original prompt (?)
 Write-Host -nonew -back $backgroundColor -fore $promptColor $(" " * $hostWidth)
 
 If (-not $SkipAddDemoTime.IsPresent) {
@@ -120,10 +136,13 @@ If (-not $SkipAddDemoTime.IsPresent) {
 <Demo Started :: $(split-path $file -leaf)>$(' ' * ($hostWidth - (18 + $(split-path $file -leaf).Length)))
 "@
 }
-Write-Host -nonew -back $backgroundColor -fore $promptColor "Press"
-Write-Host -nonew -back $backgroundColor -fore Red " ? "
-Write-Host -nonew -back $backgroundColor -fore $promptColor "for help.$(' ' * ($hostWidth - 17))"
-Write-Host -nonew -back $backgroundColor -fore $promptColor $(" " * $hostWidth)
+
+If ( -not ($SkipInstructions.IsPresent -or $FullAuto.IsPresent) ) {
+	Write-Host -nonew -back $backgroundColor -fore $promptColor "Press"
+	Write-Host -nonew -back $backgroundColor -fore Red " ? "
+	Write-Host -nonew -back $backgroundColor -fore $promptColor "for help.$(' ' * ($hostWidth - 17))"
+	Write-Host -nonew -back $backgroundColor -fore $promptColor $(" " * $hostWidth)
+}
 
 # We use a FOR and an INDEX ($_i) instead of a FOREACH because
 # it is possible to start at a different location and/or jump 
@@ -136,8 +155,11 @@ for ($_i = $Command; $_i -lt $_lines.count; $_i++) {
     
     # Echo out the commmand to the console with a prompt as though it were real
     Write-Host -nonew -fore $promptColor "[$_i]$([char]0x2265) "
+	
+	# Comments line from file can be write to the console using $commentColor as a text (not executed)
     if ($_lines[$_i].Trim(" ").StartsWith("#") -or $_lines[$_i].Trim(" ").Length -le 0) {
         Write-Host -fore $commentColor "$($_Lines[$_i])  "
+		Start-Sleep -Seconds $DelayAfterComment
         continue
     }
     else {
@@ -186,7 +208,8 @@ Running demo: $file
             #Restore oryginal PowerShell host title
             $RawUI.WindowTitle = $hostTitle
             #Restore oryginal PowerShell prompt
-            If ($UseMyPropmt.IsPresent) {
+            If ($UseMyPrompt.IsPresent) {
+				Invoke-Expression 
             }
             break;
         }
@@ -270,6 +293,6 @@ Write-Host
 #Restore oryginal PowerShell host title
 $RawUI.WindowTitle = $hostTitle
 #Restore oryginal PowerShell prompt
-If ($UseMyPropmt.IsPresent) {
+If ($UseMyPrompt.IsPresent) {
     Invoke-Expression -Command "Function Prompt { $OryginalPrompt }" -ErrorAction SilentlyContinue
 }
