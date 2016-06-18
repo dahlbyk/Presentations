@@ -9,7 +9,8 @@
 ## I've also been adding features as I come across needs for them, and you'll contribute your 
 ## improvements back to the PowerShell Script repository as well.
 ##################################################################################################
-## Revision History (version 3.4.0)
+## Revision History (version 3.4.1)
+## 3.4.1 Fixed:    Switches SkipAddTheEndLine and SkipAddDemoTime corrected
 ## 3.4.0 Fixed:    FullAuto mode corrected
 ##       Fixed:    Small corrections of code based on PSScriptAnalyzer 1.6.0 sugestions
 ##       Added:    Console window title will be set back after a demo end
@@ -105,7 +106,7 @@ Clear-Host
 
 $_lines = Get-Content $file
 
-If (-not $SkipAddSummary.IsPresent) {
+If (-not $SkipAddTheEndLine.IsPresent) {
     # Append an extra (do nothing) line on the end so we can still go back after the last line.
     $_lines += "Write-Host 'The End'"
 }
@@ -114,7 +115,7 @@ $_starttime = [DateTime]::now
 
 Write-Host -nonew -back $backgroundColor -fore $promptColor $(" " * $hostWidth)
 
-If (-not $SkipAddDemoTime) {
+If (-not $SkipAddDemoTime.IsPresent) {
     Write-Host -nonew -back $backgroundColor -fore $promptColor @"
 <Demo Started :: $(split-path $file -leaf)>$(' ' * ($hostWidth - (18 + $(split-path $file -leaf).Length)))
 "@
@@ -259,7 +260,7 @@ Running demo: $file
     }
 }
 $dur = [DateTime]::Now - $_StartTime
-If (-not $SkipAddDemoTime) {
+If (-not $SkipAddDemoTime.IsPresent) {
     Write-Host -Fore $promptColor $(
         "<Demo Complete -- $(if ($dur.Hours -gt 0) { '{0}h ' })$(if ($dur.Minutes -gt 0) { '{1}m ' }){2}s>" -f
         $dur.Hours, $dur.Minutes, $dur.Seconds, [DateTime]::Now.ToLongTimeString())
