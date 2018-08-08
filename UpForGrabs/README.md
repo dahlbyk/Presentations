@@ -14,6 +14,10 @@ Accelerating world-changing ideas, from Iowa.
 
 ---
 
+<img src="that2018-sponsors.png" width="1200" style="margin-left: -90px; margin-top: -44px" />
+
+---
+
 ## What is Open Source?
 
 "Open Source software is software that can be freely accessed, used, changed, and shared (in modified or unmodified form) by anyone."
