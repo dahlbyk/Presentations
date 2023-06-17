@@ -7,11 +7,15 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using IowaCodeCamp23.Data;
 using IowaCodeCamp23.Models;
+using Serious;
+using Serious.AspNetCore.Turbo;
 
 namespace IowaCodeCamp23.Pages.Todos
 {
-    public class IndexModel : PageModel
+    public class IndexModel : TurboPageModel
     {
+        public static DomId TableDomId = new("todos-table");
+
         private readonly IowaCodeCamp23.Data.DemoContext _context;
 
         public IndexModel(IowaCodeCamp23.Data.DemoContext context)
@@ -42,6 +46,11 @@ namespace IowaCodeCamp23.Pages.Todos
 
             _context.Todo.Add(Todo);
             await _context.SaveChangesAsync();
+
+            if (Request.IsTurboRequest())
+            {
+                return TurboAppend(TableDomId, Partial("_TableRow", Todo));
+            }
 
             return RedirectToPage("./Index");
         }

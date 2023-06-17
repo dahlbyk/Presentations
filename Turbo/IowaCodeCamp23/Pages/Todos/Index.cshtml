@@ -1,5 +1,6 @@
 ﻿@page
-@model IowaCodeCamp23.Pages.Todos.IndexModel
+@using IowaCodeCamp23.Pages.Todos
+@model IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -26,21 +27,9 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="@IndexModel.TableDomId">
 @foreach (var item in Model.Todos) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+        <partial name="_TableRow" model="@item"/>
 }
     </tbody>
 </table>
