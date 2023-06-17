@@ -1,0 +1,39 @@
+﻿@page
+@model IowaCodeCamp23.Pages.Todos.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Todo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Todo.Title" class="control-label"></label>
+                <input asp-for="Todo.Title" class="form-control" />
+                <span asp-validation-for="Todo.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Todo.Description" class="control-label"></label>
+                <input asp-for="Todo.Description" class="form-control" />
+                <span asp-validation-for="Todo.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
