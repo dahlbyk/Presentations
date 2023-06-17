@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using IowaCodeCamp23.Data;
 using IowaCodeCamp23.Models;
+using Serious.AspNetCore.Turbo;
 
 namespace IowaCodeCamp23.Pages.Todos
 {
-    public class CreateModel : PageModel
+    public class CreateModel : TurboPageModel
     {
         private readonly IowaCodeCamp23.Data.DemoContext _context;
 
@@ -26,12 +27,11 @@ namespace IowaCodeCamp23.Pages.Todos
 
         [BindProperty]
         public Todo Todo { get; set; } = default!;
-        
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Todo == null || Todo == null)
+            if (!ModelState.IsValid || _context.Todo == null || Todo == null)
             {
                 return Page();
             }
