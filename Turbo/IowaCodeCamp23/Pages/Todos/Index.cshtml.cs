@@ -14,6 +14,7 @@ namespace IowaCodeCamp23.Pages.Todos
 {
     public class IndexModel : TurboPageModel
     {
+        public static DomId CreateFormDomId = new("create-todo-form");
         public static DomId TableDomId = new("todos-table");
 
         private readonly IowaCodeCamp23.Data.DemoContext _context;
@@ -49,7 +50,10 @@ namespace IowaCodeCamp23.Pages.Todos
 
             if (Request.IsTurboRequest())
             {
-                return TurboAppend(TableDomId, Partial("_TableRow", Todo));
+                return TurboStream(
+                    TurboAppend(TableDomId, Partial("_TableRow", Todo)),
+                    TurboUpdate(CreateFormDomId, Partial("EditorTemplates/Todo", null))
+                );
             }
 
             return RedirectToPage("./Index");
