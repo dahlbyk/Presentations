@@ -11,7 +11,9 @@
 <p>
     <a asp-page="Create">Create New</a>
 
-    <partial name="_CreateForm" model="@Model.Todo" />
+    <form method="post" asp-page-handler="Create" id="IndexModel.CreateFormDomId">
+        @Html.EditorFor(m => m.Todo)
+    </form>
 </p>
 <table class="table">
     <thead>

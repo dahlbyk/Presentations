@@ -50,12 +50,9 @@ namespace IowaCodeCamp23.Pages.Todos
 
             if (Request.IsTurboRequest())
             {
-                // Reset the form
-                ModelState.Clear();
-
                 return TurboStream(
                     TurboAppend(TableDomId, Partial("_TableRow", Todo)),
-                    TurboReplace(CreateFormDomId, Partial("_CreateForm", new Todo { Title = "" }))
+                    TurboUpdate(CreateFormDomId, Partial("EditorTemplates/Todo", null))
                 );
             }
 
