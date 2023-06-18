@@ -1,0 +1,17 @@
+﻿@model IowaCodeCamp23.Models.Todo
+@{
+    var item = Model; 
+}
+<tr>
+    <td>
+        @Html.DisplayFor(item => item.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(item => item.Description)
+    </td>
+    <td>
+        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+    </td>
+</tr>

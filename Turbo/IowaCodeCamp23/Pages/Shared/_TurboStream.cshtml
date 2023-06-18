@@ -1,0 +1,16 @@
+@using Serious.AspNetCore.Turbo
+@model TurboStream
+
+@foreach (var action in Model.Elements) {
+    <turbo-stream action="@action.Action.ToString().ToLowerInvariant()" target="@action.Target">
+        @* Don't add spaces or newlines around the content of the <template> tag.
+           We might be rendering into a <pre> tag, where that matters. *@
+        @if (action is PartialTurboStreamElement { Partial: {} partial }) {
+            <template>@await Html.PartialAsync(partial.ViewName, partial.Model, partial.ViewData)</template>
+        } else if (action is ContentTurboStreamElement { Content: { } content }) {
+            <template>@content</template>
+        } else {
+            <template></template>
+        }
+    </turbo-stream>
+}

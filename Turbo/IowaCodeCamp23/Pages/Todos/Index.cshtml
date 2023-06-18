@@ -1,0 +1,35 @@
+﻿@page
+@using IowaCodeCamp23.Pages.Todos
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+
+    <form method="post" asp-page-handler="Create" id="@IndexModel.CreateFormDomId">
+        @Html.EditorFor(m => m.Todo)
+    </form>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Todos[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Todos[0].Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="@IndexModel.TableDomId">
+@foreach (var item in Model.Todos) {
+        <partial name="_TableRow" model="@item"/>
+}
+    </tbody>
+</table>
