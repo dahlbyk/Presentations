@@ -50,7 +50,7 @@ namespace That23.Pages_Todos
             if (Request.IsTurboRequest())
             {
                 return TurboStream(
-                    TurboAppend(
+                    TurboPrepend(
                         TodoTable,
                         Partial("_TodoTableRow", Todo)),
                     TurboUpdate(

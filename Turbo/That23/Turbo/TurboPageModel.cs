@@ -101,6 +101,16 @@ public class TurboPageModel : PageModel
     /// </summary>
     /// <param name="target">The <see cref="DomId"/> of the element where the content will be appended within.</param>
     /// <param name="partial">The content to replace the target element with.</param>
+    protected TurboStreamViewResult TurboPrepend(DomId target, PartialViewResult partial)
+    {
+        return TurboStream(new PartialTurboStreamElement(TurboStreamAction.Prepend, target, partial));
+    }
+
+    /// <summary>
+    /// Appends the content within the template tag to the container designated by the target dom id.
+    /// </summary>
+    /// <param name="target">The <see cref="DomId"/> of the element where the content will be appended within.</param>
+    /// <param name="partial">The content to replace the target element with.</param>
     protected TurboStreamViewResult TurboAppend(DomId target, PartialViewResult partial)
     {
         return TurboStream(new PartialTurboStreamElement(TurboStreamAction.Append, target, partial));
