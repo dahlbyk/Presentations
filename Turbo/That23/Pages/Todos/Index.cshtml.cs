@@ -5,12 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Serious;
+using Serious.AspNetCore.Turbo;
 using That23.Models;
 
 namespace That23.Pages_Todos
 {
-    public class IndexModel : PageModel
+    public class IndexModel : TurboPageModel
     {
+        public static DomId TodoTable = new("todo-table");
+
         private readonly TodoDbContext _context;
 
         public IndexModel(TodoDbContext context)
@@ -41,6 +45,13 @@ namespace That23.Pages_Todos
 
             _context.Todo.Add(Todo);
             await _context.SaveChangesAsync();
+
+            if (Request.IsTurboRequest())
+            {
+                return TurboAppend(
+                    TodoTable,
+                    Partial("_TodoTableRow", Todo));
+            }
 
             return RedirectToPage("./Index");
         }
