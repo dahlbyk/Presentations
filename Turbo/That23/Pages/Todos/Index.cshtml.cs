@@ -14,6 +14,7 @@ namespace That23.Pages_Todos
     public class IndexModel : TurboPageModel
     {
         public static DomId TodoTable = new("todo-table");
+        public static DomId TodoCreate = new("todo-create");
 
         private readonly TodoDbContext _context;
 
@@ -48,9 +49,14 @@ namespace That23.Pages_Todos
 
             if (Request.IsTurboRequest())
             {
-                return TurboAppend(
-                    TodoTable,
-                    Partial("_TodoTableRow", Todo));
+                return TurboStream(
+                    TurboAppend(
+                        TodoTable,
+                        Partial("_TodoTableRow", Todo)),
+                    TurboUpdate(
+                        TodoCreate,
+                        Partial("EditorTemplates/Todo", new Todo { Title = "" }))
+                );
             }
 
             return RedirectToPage("./Index");

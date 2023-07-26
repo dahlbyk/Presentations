@@ -11,7 +11,9 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+<div id="@IndexModel.TodoCreate">
 @Html.EditorFor(m => m.Todo)
+</div>
 <table class="table">
     <thead>
         <tr>
