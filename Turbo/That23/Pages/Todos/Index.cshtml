@@ -10,20 +10,21 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+@Html.EditorFor(m => m.Todo)
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Todo[0].Title)
+                @Html.DisplayNameFor(model => model.Todos[0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Todo[0].Description)
+                @Html.DisplayNameFor(model => model.Todos[0].Description)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Todo) {
+@foreach (var item in Model.Todos) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)

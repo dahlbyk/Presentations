@@ -18,14 +18,31 @@ namespace That23.Pages_Todos
             _context = context;
         }
 
-        public IList<Todo> Todo { get;set; } = default!;
+        public IList<Todo> Todos { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             if (_context.Todo != null)
             {
-                Todo = await _context.Todo.ToListAsync();
+                Todos = await _context.Todo.ToListAsync();
             }
+        }
+
+        [BindProperty]
+        public Todo Todo { get; set; } = default!;
+
+        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid || _context.Todo == null || Todo == null)
+            {
+                return Page();
+            }
+
+            _context.Todo.Add(Todo);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }
