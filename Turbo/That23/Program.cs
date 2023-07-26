@@ -1,7 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<TodoDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("TodoDbContext") ?? throw new InvalidOperationException("Connection string 'TodoDbContext' not found.")));
 
 var app = builder.Build();
 
