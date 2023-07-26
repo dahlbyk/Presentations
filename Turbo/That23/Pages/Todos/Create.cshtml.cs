@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Serious.AspNetCore.Turbo;
 using That23.Models;
 
 namespace That23.Pages_Todos
 {
-    public class CreateModel : PageModel
+    public class CreateModel : TurboPageModel
     {
         private readonly TodoDbContext _context;
 
@@ -24,13 +25,12 @@ namespace That23.Pages_Todos
         }
 
         [BindProperty]
-        public Todo Todo { get; set; } = default!;
-        
+        public Todo Todo { get; set; } = new Todo { Title = "" };
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Todo == null || Todo == null)
+            if (!ModelState.IsValid || _context.Todo == null || Todo == null)
             {
                 return Page();
             }
