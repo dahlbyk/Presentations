@@ -1,0 +1,34 @@
+@page
+@using That23.Pages_Todos
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<div id="@IndexModel.TodoCreate">
+@Html.EditorFor(m => m.Todo)
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Todos[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Todos[0].Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="@IndexModel.TodoTable">
+@foreach (var item in Model.Todos) {
+        <partial name="_TodoTableRow" model="@item" />
+}
+    </tbody>
+</table>
